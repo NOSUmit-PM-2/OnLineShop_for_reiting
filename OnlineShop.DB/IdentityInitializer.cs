@@ -24,6 +24,13 @@ namespace OnlineShop.DB
             {
                 roleManager.CreateAsync(new IdentityRole(Constants.UserRoleName)).Wait();
             }
+
+            // делаю добавление роли по умолчанию
+            if (roleManager.FindByNameAsync(Constants.DeliveryManager).Result == null)
+            {
+                roleManager.CreateAsync(new IdentityRole(Constants.DeliveryManager)).Wait();
+            }
+
             if (userManager.FindByNameAsync(adminEmail).Result == null)
             {
                 var admin = new User { Email = adminEmail, UserName = adminEmail };

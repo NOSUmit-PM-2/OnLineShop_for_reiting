@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
 using OnlineShop.DB;
 using System.Diagnostics;
@@ -9,6 +10,7 @@ using WebApplicationShopOnline.Models;
 
 namespace WebApplicationShopOnline.Controllers
 {
+    [Authorize]
     public class CartController : Controller
     {
         readonly IProductDBsRepository productsRepository;

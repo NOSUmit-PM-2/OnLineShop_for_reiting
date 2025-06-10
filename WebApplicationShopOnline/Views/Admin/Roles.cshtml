@@ -1,0 +1,25 @@
+﻿@model List<IdentityRole>
+
+<div class="row">
+    <div class="col">
+        @await Html.PartialAsync("SideMenu")
+    </div>
+    <div class="col-9">
+        <h2>Роли</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Название роли</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var role in Model)
+                {
+                    <tr>
+                        <td>@role.Name</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
