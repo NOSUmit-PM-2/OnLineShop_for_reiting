@@ -86,5 +86,10 @@ namespace OnlineShop.DB
             item.Amount = 1;
             return item;
         }
+
+        CartItemDB ICartDBsRepository.TryGetCartItemByProductId(Guid productId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

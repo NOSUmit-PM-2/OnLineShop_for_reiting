@@ -53,11 +53,14 @@ namespace WebApplicationShopOnline.Controllers
             return View(Mapping.ToProduct(productDB));
         }
 
+       
         [HttpPost]
         public IActionResult EditProduct(Product product)
         {
-            productsRepository.Updata(Mapping.ToProductDB(product));
+            productsRepository.Update(Mapping.ToProductDB(product)); 
             return RedirectToAction("Index", "Product", new { product.Id });
         }
+
+
     }
 }

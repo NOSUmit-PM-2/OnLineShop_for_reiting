@@ -1,9 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Hosting;
 using OnlineShop.DB;
-using System.Diagnostics;
-using System.Xml.Linq;
-using WebApplicationShopOnline.Data;
 using WebApplicationShopOnline.Helpers;
 using WebApplicationShopOnline.Models;
 
@@ -11,8 +7,8 @@ namespace WebApplicationShopOnline.Controllers
 {
     public class CartController : Controller
     {
-        readonly IProductDBsRepository productsRepository;
-        readonly ICartDBsRepository cartsRepository;
+        private readonly IProductDBsRepository productsRepository;
+        private readonly ICartDBsRepository cartsRepository;
 
         public CartController(IProductDBsRepository prodRepo, ICartDBsRepository cartsRepository)
         {
@@ -20,7 +16,7 @@ namespace WebApplicationShopOnline.Controllers
             this.cartsRepository = cartsRepository;
         }
 
-        public IActionResult Index(int id)
+        public IActionResult Index()
         {
             Cart cart = Mapping.ToCart(cartsRepository.TryGetByUserId(1));
             return View(cart);
@@ -29,19 +25,44 @@ namespace WebApplicationShopOnline.Controllers
         public IActionResult Add(Guid id)
         {
             ProductDB product = productsRepository.TryGetById(id);
-            cartsRepository.Add(product, 1);
+
+            if (product != null && product.Quantity > 0)
+            {
+                // Уменьшаем количество товара
+                product.Quantity--;
+                productsRepository.Update(product);
+
+                // Добавляем в корзину
+                cartsRepository.Add(product, 1);
+            }
+
             return RedirectToAction("Index");
         }
 
         public IActionResult IncreaseCountProduct(Guid productId)
         {
-            cartsRepository.IncreaseCountProduct(productId, 1);
+            var product = productsRepository.TryGetById(productId);
+            if (product != null && product.Quantity > 0)
+            {
+                product.Quantity--;
+                productsRepository.Update(product);
+                cartsRepository.IncreaseCountProduct(productId, 1);
+            }
             return RedirectToAction("Index");
         }
 
         public IActionResult DecreaseCountProduct(Guid productId)
         {
-            cartsRepository.DecreaseCountProduct(productId, 1);
+            var cartItem = cartsRepository.TryGetCartItemByProductId(productId);
+            if (cartItem != null)
+            {
+                // Возвращаем товар в количество
+                var product = productsRepository.TryGetById(productId);
+                product.Quantity += 1;
+                productsRepository.Update(product);     
+
+                cartsRepository.DecreaseCountProduct(productId, 1);
+            }
             return RedirectToAction("Index");
         }
     }
