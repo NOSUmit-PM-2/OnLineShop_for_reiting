@@ -44,5 +44,17 @@ namespace WebApplicationShopOnline.Controllers
             cartsRepository.DecreaseCountProduct(productId, 1);
             return RedirectToAction("Index");
         }
+
+        public async Task<IActionResult> AddFavorite(Guid productId)
+        {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            var userId = User.Identity.Name;
+            cartsRepository.AddFavorite(productId, userId);
+            return RedirectToAction("Index");
+        }
     }
 }
