@@ -1,15 +1,18 @@
-﻿
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using OnlineShop.DB.Models;
 
 namespace OnlineShop.DB
 {
     public class CartDBsRepository : ICartDBsRepository
     {
         readonly DatabaseContext databaseContext;
+        private readonly UserManager<User> _userManager;
 
-        public CartDBsRepository(DatabaseContext databaseContext)
+        public CartDBsRepository(DatabaseContext databaseContext, UserManager<User> userManager)
         {
             this.databaseContext = databaseContext;
+            _userManager = userManager;
         }
 
         public void Add(ProductDB product, int userId)
@@ -85,6 +88,42 @@ namespace OnlineShop.DB
             item.Product = product;
             item.Amount = 1;
             return item;
+        }
+
+        public void AddFavorite(Guid productId, string userId)
+        {
+            var user = _userManager.FindByIdAsync(userId).Result;
+            if (user != null && !user.FavoriteProductIds.Contains(productId))
+            {
+                var favorites = user.FavoriteProductIds;
+                favorites.Add(productId);
+                user.FavoriteProductIds = favorites;
+                _userManager.UpdateAsync(user).Wait();
+            }
+        }
+
+        public void RemoveFavorite(Guid productId, string userId)
+        {
+            var user = _userManager.FindByIdAsync(userId).Result;
+            if (user != null && user.FavoriteProductIds.Contains(productId))
+            {
+                var favorites = user.FavoriteProductIds;
+                favorites.Remove(productId);
+                user.FavoriteProductIds = favorites;
+                _userManager.UpdateAsync(user).Wait();
+            }
+        }
+
+        public List<Guid> GetFavoriteProducts(string userId)
+        {
+            var user = _userManager.FindByIdAsync(userId).Result;
+            return user?.FavoriteProductIds ?? new List<Guid>();
+        }
+
+        public bool IsProductFavorite(Guid productId, string userId)
+        {
+            var user = _userManager.FindByIdAsync(userId).Result;
+            return user?.FavoriteProductIds.Contains(productId) ?? false;
         }
     }
 }

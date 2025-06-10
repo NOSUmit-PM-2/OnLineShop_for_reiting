@@ -10,6 +10,15 @@
                 <p class="card-text">@Model.Description</p>
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <form asp-controller="Favorite" asp-action="AddToFavorites" method="post">
+                                <input type="hidden" name="productId" value="@Model.Id" />
+                                <button type="submit" class="btn btn-outline-primary">
+                                    <i class="bi bi-heart"></i> В избранное
+                                </button>
+                            </form>
+                        }
                         <a type="button" class="btn btn-primary"
                            asp-controller="Admin"
                            asp-action="EditProduct"

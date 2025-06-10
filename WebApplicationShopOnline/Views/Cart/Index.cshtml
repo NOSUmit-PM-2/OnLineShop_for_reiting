@@ -37,6 +37,11 @@
                                asp-controller="Cart"
                                asp-action="DecreaseCountProduct"
                                asp-route-productId="@cartItem.Product.Id">-</a>
+                            <a type="button" class="btn btn-outline-dark"
+                               asp-controller="Cart"
+                               asp-action="AddFavorites"
+                               asp-route-productId="@cartItem.Product.Id">-</a>
+
                         </td>
                     </tr>
                 }
