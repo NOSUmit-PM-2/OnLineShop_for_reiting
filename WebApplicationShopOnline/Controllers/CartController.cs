@@ -53,7 +53,7 @@ namespace WebApplicationShopOnline.Controllers
             }
 
             var userId = User.Identity.Name;
-            await cartsRepository.AddFavorite(productId, userId);
+            cartsRepository.AddFavorite(productId, userId);
             return RedirectToAction("Index");
         }
     }
