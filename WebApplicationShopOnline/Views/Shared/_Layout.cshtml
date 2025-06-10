@@ -57,9 +57,9 @@
 
                         @if (User.Identity.IsAuthenticated)
                         {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark"> @User.Identity.Name</a>  
-                            </li>
+                            <a asp-action="Profile" asp-controller="Account" class="nav-link">
+                                @User.Identity.Name  <!-- Имя пользователя -->
+                            </a>
                             <li class="nav-item">
                                 <a class="nav-link text-dark"
                                    asp-area=""

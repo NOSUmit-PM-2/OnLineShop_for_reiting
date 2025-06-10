@@ -1,0 +1,38 @@
+﻿@model UserProfileModel  // Модель с данными пользователя
+
+<div class="text-left">
+    <h1 class="display-4">Личный кабинет</h1>
+
+    <div class="form-group">
+        <label>Аватар</label>
+        <div>
+            <img src="@(Model.AvatarUrl ?? "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fimg.freepik.com%2Fpremium-vector%2Fman-character_665280-46970.jpg&f=1&nofb=1&ipt=97100435d2c821180af9a26c2cbacbd9b5dbc559e48829142579314b722441fd")"
+                 alt="Аватар"
+                 class="img-thumbnail"
+                 width="150"
+                 height="150">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Имя пользователя</label>
+        <input class="form-control" value="@Model.UserName" readonly>
+    </div>
+
+    <div class="form-group">
+        <label>Email</label>
+        <input class="form-control" value="@Model.Email" readonly>
+    </div>
+
+    @* <div class="form-group">
+        <label>Телефон</label>
+        <input class="form-control" value="@(Model.Phone ?? "Не указан")" readonly>
+    </div>
+
+    <div class="form-group">
+        <label>Адрес</label>
+        <input class="form-control" value="@(Model.Address ?? "Не указан")" readonly>
+    </div> *@
+
+    <a asp-action="EditProfile" asp-controller="Account" class="btn btn-primary">Редактировать</a>
+</div>
