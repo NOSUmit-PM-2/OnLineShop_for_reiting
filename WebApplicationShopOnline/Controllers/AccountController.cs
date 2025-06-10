@@ -51,7 +51,7 @@ namespace WebApplicationShopOnline.Controllers
         {
             if (_userManager.FindByNameAsync(reg.UserName).Result == null)
             {
-                var user = new User { Email = reg.Email, UserName = reg.UserName };
+                var user = new User { Address = reg.Address, Namber = reg.Namber, Email = reg.Email, UserName = reg.UserName };
                 var result = _userManager.CreateAsync(user, reg.Password).Result;
                 if (result.Succeeded)
                 {
@@ -67,6 +67,16 @@ namespace WebApplicationShopOnline.Controllers
         {
             _signInManager.SignOutAsync().Wait();   
             return RedirectToAction("Catalog", "Product");
+        }
+        public IActionResult PersonalAccount(string name)
+        {
+            var user = _userManager.FindByNameAsync(name);
+            if (user != null)
+            {
+                return View(user);
+            }
+
+            return RedirectToAction("Index", "Home");
         }
 
     }
