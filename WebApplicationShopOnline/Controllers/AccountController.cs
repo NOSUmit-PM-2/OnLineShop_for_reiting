@@ -10,32 +10,40 @@ namespace WebApplicationShopOnline.Controllers
 {
     public class AccountController : Controller
     {
-        //private readonly IUserManager usersManager;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly ILogger<AccountController> _logger;
 
-        public AccountController(SignInManager<User> signInManager, UserManager<User> _userManager)
+        public AccountController(
+            SignInManager<User> signInManager,
+            UserManager<User> userManager,
+            ILogger<AccountController> logger)
         {
             _signInManager = signInManager;
-            this._userManager = _userManager;
+            _userManager = userManager;
+            _logger = logger;
         }
 
         [HttpPost]
-        public IActionResult Login(Login login)
+        public async Task<IActionResult> Login(Login login)
         {
-            var user = _userManager.FindByNameAsync(login.UserName).Result;
-            if (user != null)
+            if (ModelState.IsValid)
             {
-                var result = _signInManager.PasswordSignInAsync(user, login.Password, login.RememberMe, false).Result;
-                if (result.Succeeded)
+                var user = await _userManager.FindByNameAsync(login.UserName);
+                if (user != null)
                 {
-                    return RedirectToAction("Catalog", "Product");
+                    var result = await _signInManager.PasswordSignInAsync(user, login.Password, login.RememberMe, false);
+                    if (result.Succeeded)
+                    {
+                        _logger.LogInformation("User {UserName} logged in successfully", login.UserName);
+                        return RedirectToAction("Catalog", "Product");
+                    }
+                    _logger.LogWarning("Failed login attempt for user {UserName}", login.UserName);
                 }
             }
             return View(login);
         }
 
-   
         public IActionResult Login()
         {
             return View();
@@ -47,27 +55,56 @@ namespace WebApplicationShopOnline.Controllers
         }
 
         [HttpPost]
-        public IActionResult Registration(Registration reg)
+        public async Task<IActionResult> Registration(Registration reg)
         {
-            if (_userManager.FindByNameAsync(reg.UserName).Result == null)
+            if (ModelState.IsValid)
             {
+                var existingUser = await _userManager.FindByNameAsync(reg.UserName);
+                if (existingUser != null)
+                {
+                    ModelState.AddModelError("UserName", "Пользователь с таким именем уже существует");
+                    _logger.LogWarning("Registration failed: Username {UserName} already exists", reg.UserName);
+                    return View(reg);
+                }
+
+                var existingEmail = await _userManager.FindByEmailAsync(reg.Email);
+                if (existingEmail != null)
+                {
+                    ModelState.AddModelError("Email", "Пользователь с таким email уже существует");
+                    _logger.LogWarning("Registration failed: Email {Email} already exists", reg.Email);
+                    return View(reg);
+                }
+
                 var user = new User { Email = reg.Email, UserName = reg.UserName };
-                var result = _userManager.CreateAsync(user, reg.Password).Result;
+                var result = await _userManager.CreateAsync(user, reg.Password);
+
                 if (result.Succeeded)
                 {
-                    _userManager.AddToRoleAsync(user, OnlineShop.DB.Constants.UserRoleName).Wait();
-                    _signInManager.SignInAsync(user, false).Wait();
+                    _logger.LogInformation("User {UserName} registered successfully", reg.UserName);
+                    await _userManager.AddToRoleAsync(user, OnlineShop.DB.Constants.UserRoleName);
+                    await _signInManager.SignInAsync(user, false);
                     return RedirectToAction("Catalog", "Product");
                 }
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                        _logger.LogWarning("Registration failed for user {UserName}: {Error}", reg.UserName, error.Description);
+                    }
+                }
             }
-            return View();
+            return View(reg);
         }
-
-        public IActionResult Logout()
+        public async Task<IActionResult> Logout()
         {
-            _signInManager.SignOutAsync().Wait();   
+            var userName = User.Identity?.Name;
+            await _signInManager.SignOutAsync();
+            if (!string.IsNullOrEmpty(userName))
+            {
+                _logger.LogInformation("User {UserName} logged out", userName);
+            }
             return RedirectToAction("Catalog", "Product");
         }
-
     }
 }
