@@ -25,10 +25,27 @@ namespace WebApplicationShopOnline.Controllers
         }
 
 
-        public IActionResult Catalog() 
+        /* public IActionResult Catalog() 
+         {
+             List<ProductDB>products = productsRepository.GetAll();
+             //return View("CatalogSimple", products);
+             return View(Mapping.ToProductsList(products));
+         }*/
+        public IActionResult Catalog(decimal? minPrice, decimal? maxPrice)
         {
-            List<ProductDB>products = productsRepository.GetAll();
-            //return View("CatalogSimple", products);
+            List<ProductDB> products = productsRepository.GetAll();
+
+            if (minPrice.HasValue || maxPrice.HasValue)
+            {
+                products = products.Where(p =>
+                    (!minPrice.HasValue || p.Cost >= minPrice.Value) &&
+                    (!maxPrice.HasValue || p.Cost <= maxPrice.Value)
+                ).ToList();
+            }
+
+            ViewBag.MinPrice = minPrice;
+            ViewBag.MaxPrice = maxPrice;
+
             return View(Mapping.ToProductsList(products));
         }
     }
