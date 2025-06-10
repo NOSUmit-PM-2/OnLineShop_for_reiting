@@ -2,6 +2,17 @@
 
     <h2>Каталог</h2>
 
+<div class="row mb-4">
+    <div class="col-md-6">
+        <form method="get" class="d-flex gap-2">
+            <div class="input-group">
+                <input type="number" name="minPrice" class="form-control" placeholder="Мин. цена" value="@ViewBag.MinPrice">
+                <input type="number" name="maxPrice" class="form-control" placeholder="Макс. цена" value="@ViewBag.MaxPrice">
+                <button type="submit" class="btn btn-primary">Фильтровать</button>
+            </div>
+        </form>
+    </div>
+</div>
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 
     @foreach(var product in Model)
