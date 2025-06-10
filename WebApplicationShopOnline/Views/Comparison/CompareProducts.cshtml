@@ -1,0 +1,45 @@
+﻿@model Product
+
+@{
+    ViewData["Title"] = "Сравнение товаров";
+}
+
+<h2>Сравнение товаров</h2>
+
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Название поля</th>
+                <th>@Model.Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>ID</td>
+                <td>@Model.Id</td>
+
+            </tr>
+            <tr>
+                <td>Название</td>
+                <td>@Model.Name</td>
+            </tr>
+            <tr>
+                <td>Описание</td>
+                <td>@Model.Description</td>
+            </tr>
+            <tr>
+                <td>Цена</td>
+                <td>@Model.Cost.ToString("C")</td>
+            </tr>
+            <tr>
+                <td>Изображение</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(Model.PathPicture))
+                    {
+                        <img src="@Model.PathPicture" alt="Изображение товара 1" style="max-width: 100px;" />
+                    }
+                </td>
+            </tr>
+        </tbody>
+    </table>
