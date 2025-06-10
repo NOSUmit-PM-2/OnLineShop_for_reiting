@@ -1,0 +1,14 @@
+@model OnlineShop.DB.Models.User
+
+<div class="container mt-4">
+    <h2>Личный кабинет</h2>
+    <div class="card" style="max-width: 400px;">
+        <div class="card-body text-center">
+            <img src="@Model.AvatarUrl" alt="Аватар" class="rounded-circle mb-3" style="width: 120px; height: 120px; object-fit: cover;">
+            <h4 class="card-title">@Model.UserName</h4>
+            <p class="card-text"><strong>Email:</strong> @Model.Email</p>
+            <p class="card-text"><strong>Телефон:</strong> @Model.PhoneNumber</p>
+            <p class="card-text"><strong>ID:</strong> @Model.Id</p>
+        </div>
+    </div>
+</div> 
