@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualBasic;
+using OnlineShop.DB;
 using OnlineShop.DB.Models;
 using System.Diagnostics;
+using System.Security.Claims;
 using WebApplicationShopOnline.Models;
-using OnlineShop.DB;
 
 namespace WebApplicationShopOnline.Controllers
 {
@@ -67,6 +69,27 @@ namespace WebApplicationShopOnline.Controllers
         {
             _signInManager.SignOutAsync().Wait();   
             return RedirectToAction("Catalog", "Product");
+        }
+
+        [Authorize]  // Доступ только для авторизованных
+        public IActionResult Profile()
+        {
+            // Получаем данные пользователя (например, из БД или Claims)
+            var user = new UserProfileModel
+            {
+                UserName = User.Identity.Name,
+                Email = User.FindFirst(ClaimTypes.Email)?.Value,
+                AvatarUrl = null  // Если есть аватар - указать путь
+            };
+
+            return View(user);
+        }
+
+        [Authorize]
+        public IActionResult EditProfile()
+        {
+            // Логика редактирования профиля
+            return View();
         }
 
     }
