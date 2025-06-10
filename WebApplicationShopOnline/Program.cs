@@ -17,8 +17,8 @@ builder.Services.AddTransient<IProductDBsRepository, ProductsDBRepository>();
 
 builder.Services.AddTransient<ICartDBsRepository, CartDBsRepository>();
 
-//builder.Services.AddTransient<IFavDBRepository, FavDBRepository>();
-builder.Services.AddTransient<IFavDBRepository, FavInMemoryRepository>();
+builder.Services.AddTransient<IFavDBRepository, FavDBRepository>();
+
 
 
 
