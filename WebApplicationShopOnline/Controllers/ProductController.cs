@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using OnlineShop.DB;
 using System.Diagnostics;
@@ -25,11 +26,18 @@ namespace WebApplicationShopOnline.Controllers
         }
 
 
-        public IActionResult Catalog() 
+        public IActionResult Catalog(bool sortByName = false)
         {
-            List<ProductDB>products = productsRepository.GetAll();
-            //return View("CatalogSimple", products);
-            return View(Mapping.ToProductsList(products));
+            var productDBs = productsRepository.GetAll();
+
+            if (sortByName)
+            {
+                productDBs = productDBs.OrderBy(p => p.Name).ToList();
+            }
+
+            var products = productDBs.Select(p => Mapping.ToProduct(p)).ToList(); 
+
+            return View(products);
         }
     }
 }
