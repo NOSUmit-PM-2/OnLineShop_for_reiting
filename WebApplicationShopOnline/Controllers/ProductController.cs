@@ -6,7 +6,6 @@ using System.Xml.Linq;
 using WebApplicationShopOnline.Data;
 using WebApplicationShopOnline.Helpers;
 using WebApplicationShopOnline.Models;
-using System.Linq;
 
 namespace WebApplicationShopOnline.Controllers
 {
@@ -26,15 +25,10 @@ namespace WebApplicationShopOnline.Controllers
         }
 
 
-        public IActionResult Catalog((string sort = null) 
+        public IActionResult Catalog()
         {
             List<ProductDB> products = productsRepository.GetAll();
             //return View("CatalogSimple", products);
-            
-            if (sort == "price")
-            {
-                products = products.OrderBy(p => p.Cost).ToList();
-            }
             return View(Mapping.ToProductsList(products));
         }
     }

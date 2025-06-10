@@ -27,28 +27,6 @@ using (var scope = app.Services.CreateScope())
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
     IdentityInitializer.Initialize(userManager, roleManager);
-
-    var productsRepo = scope.ServiceProvider.GetRequiredService<IProductDBsRepository>();
-    if (productsRepo.GetAll().Count == 0) 
-    {
-        productsRepo.Add(new ProductDB
-        {
-            Id = Guid.NewGuid(),
-            Name = "Тестовый товар 1",
-            Description = "Описание тестового товара 1",
-            Cost = 100,
-            PathPicture = "https://via.placeholder.com/150"
-        });
-        productsRepo.Add(new ProductDB
-        {
-            Id = Guid.NewGuid(),
-            Name = "Тестовый товар 2",
-            Description = "Описание тестового товара 2",
-            Cost = 200,
-            PathPicture = "https://via.placeholder.com/150"
-        });
-        
-    }
 }
 
 // Configure the HTTP request pipeline.
