@@ -15,7 +15,7 @@
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ShopOnline</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                aria-expanded="false" aria-label="Toggle navigation">
+                        aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
@@ -24,25 +24,26 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Проект для ДЗ по ASP</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" 
-                            asp-area="" 
-                            asp-controller="Product" 
-                            asp-action="Catalog">
-                                Каталог</a>
+                            <a class="nav-link text-dark"
+                               asp-area=""
+                               asp-controller="Product"
+                               asp-action="Catalog">
+                                Каталог
+                            </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark"
-                            asp-area=""
-                            asp-controller="Cart"
-                            asp-action="Index">
+                               asp-area=""
+                               asp-controller="Cart"
+                               asp-action="Index">
                                 Корзина
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark"
-                            asp-area=""
-                            asp-controller="Admin"
-                            asp-action="Products">
+                               asp-area=""
+                               asp-controller="Admin"
+                               asp-action="Products">
                                 Администратор
                             </a>
                         </li>
@@ -55,30 +56,31 @@
                             </a>
                         </li>
 
+
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark"> @User.Identity.Name</a>  
+                                <a class="nav-link text-dark"> @User.Identity.Name</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark"
                                    asp-area=""
                                    asp-controller="Account"
                                    asp-action="Logout">
-                                    Выход 
+                                    Выход
                                 </a>
                             </li>
                         }
                         else
                         {
-                        <li class="nav-item">
-                            <a class="nav-link text-dark"
-                               asp-area=""
-                               asp-controller="Account"
-                               asp-action="Login">
-                               Вход
-                            </a>
-                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark"
+                                   asp-area=""
+                                   asp-controller="Account"
+                                   asp-action="Login">
+                                    Вход
+                                </a>
+                            </li>
                         }
                     </ul>
                 </div>
@@ -100,7 +102,8 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    @await Html.PartialAsync("_ValidationScriptsPartial.cshtml")
+    @await Html.PartialAsync("_ValidationScriptsPartial")
     @await RenderSectionAsync("Scripts", required: false)
+
 </body>
 </html>
