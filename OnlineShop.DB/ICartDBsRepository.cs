@@ -1,11 +1,10 @@
-﻿
-namespace OnlineShop.DB
+﻿using OnlineShop.DB;
+
+public interface ICartDBsRepository
 {
-    public interface ICartDBsRepository
-    {
-        CartDB TryGetByUserId(int id);
-        void Add(ProductDB product, int userId);
-        void IncreaseCountProduct(Guid productId, int userId);
-        void DecreaseCountProduct(Guid productId, int userId);
-    }
+    CartDB TryGetByUserId(int userId);
+    void Add(ProductDB product, int amount);
+    void IncreaseCountProduct(Guid productId, int amount);
+    void DecreaseCountProduct(Guid productId, int amount);
+    CartItemDB TryGetCartItemByProductId(Guid productId);
 }

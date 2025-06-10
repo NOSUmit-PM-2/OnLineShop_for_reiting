@@ -13,7 +13,8 @@ namespace WebApplicationShopOnline.Helpers
                 Name = product.Name,
                 Cost = product.Cost,
                 Description = product.Description,
-                PathPicture = product.PathPicture
+                PathPicture = product.PathPicture,
+                Quantity = product.Quantity
             };
         }
 
@@ -25,7 +26,8 @@ namespace WebApplicationShopOnline.Helpers
                 Name = product.Name,
                 Cost = product.Cost,
                 Description = product.Description,
-                PathPicture = product.PathPicture
+                PathPicture = product.PathPicture,
+                Quantity = product.Quantity
             };
         }
 
