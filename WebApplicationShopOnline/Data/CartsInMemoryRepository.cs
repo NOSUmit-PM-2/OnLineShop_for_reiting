@@ -15,7 +15,7 @@ namespace WebApplicationShopOnline.Data
             return item;
         }
 
-        public void Add(Product product, int userId)
+        public void Add(Product product, string userId)
         {
             var currentCart = TryGetByUserId(userId);
 
@@ -42,12 +42,12 @@ namespace WebApplicationShopOnline.Data
             }
         }
 
-        public Cart TryGetByUserId(int id)
+        public Cart TryGetByUserId(string userId)
         {
-            return Carts.FirstOrDefault(x => x.UserId == id);
+            return Carts.FirstOrDefault(x => x.UserId == userId);
         }
 
-        public void IncreaseCountProduct(Guid productId, int userId)
+        public void IncreaseCountProduct(Guid productId, string userId)
         {
             var currentCart = TryGetByUserId(userId);
             var currentCartItem = currentCart.CartItems.FirstOrDefault(x => x.Product.Id == productId);
@@ -57,7 +57,7 @@ namespace WebApplicationShopOnline.Data
             }
         }
 
-        public void DecreaseCountProduct(Guid productId, int userId)
+        public void DecreaseCountProduct(Guid productId, string userId)
         {
             var currentCart = TryGetByUserId(userId);
             var currentCartItem = currentCart.CartItems.FirstOrDefault(x => x.Product.Id == productId);
