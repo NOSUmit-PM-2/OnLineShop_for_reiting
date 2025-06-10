@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using OnlineShop.DB
+
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -23,6 +26,19 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Проект для ДЗ по ASP</a>
                         </li>
+
+                        @if (User.IsInRole(Constants.AdminRoleName))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark"
+                                   asp-area=""
+                                   asp-controller="Admin"
+                                   asp-action="Products">
+                                    Администратор
+                                </a>
+                            </li>
+                        }
+
                         <li class="nav-item">
                             <a class="nav-link text-dark" 
                             asp-area="" 
@@ -30,33 +46,19 @@
                             asp-action="Catalog">
                                 Каталог</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark"
-                            asp-area=""
-                            asp-controller="Cart"
-                            asp-action="Index">
-                                Корзина
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark"
-                            asp-area=""
-                            asp-controller="Admin"
-                            asp-action="Products">
-                                Администратор
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark"
-                               asp-area=""
-                               asp-controller="Account"
-                               asp-action="Registration">
-                                Регистрация
-                            </a>
-                        </li>
+
+                        
+                        
 
                         @if (User.Identity.IsAuthenticated)
                         {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark"
+                                   href="#">
+                                    Корзина
+                                </a>
+                            </li>
+
                             <li class="nav-item">
                                 <a class="nav-link text-dark"> @User.Identity.Name</a>  
                             </li>
@@ -71,6 +73,14 @@
                         }
                         else
                         {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark"
+                                asp-area=""
+                                asp-controller="Account"
+                                asp-action="Registration">
+                                Регистрация
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark"
                                asp-area=""

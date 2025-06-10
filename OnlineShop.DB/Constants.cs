@@ -10,5 +10,8 @@ namespace OnlineShop.DB
     {
         public const string AdminRoleName = "Admin";
         public const string UserRoleName = "User";
+
+        // добавил константу роли
+        public const string DeliveryManager = "DeliveryManager";
     }
 }
