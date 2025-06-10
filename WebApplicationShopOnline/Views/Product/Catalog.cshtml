@@ -1,6 +1,11 @@
 ﻿@model List<Product>
 
     <h2>Каталог</h2>
+<!--Кнопка для сортировки-->
+<form method="get" asp-controller="Product" asp-action="Catalog">
+    <input type="hidden" name="sort" value="price" />
+    <button type="submit" class="btn btn-success mb-3">Сортировать по цене (возрастание)</button>
+</form>
 
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 
