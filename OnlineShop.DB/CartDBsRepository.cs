@@ -12,7 +12,7 @@ namespace OnlineShop.DB
             this.databaseContext = databaseContext;
         }
 
-        public void Add(ProductDB product, int userId)
+        public void Add(ProductDB product, string userId)
         {
             var currentCart = TryGetByUserId(userId);
 
@@ -42,7 +42,7 @@ namespace OnlineShop.DB
         }
 
 
-        public void DecreaseCountProduct(Guid productId, int userId)
+        public void DecreaseCountProduct(Guid productId, string userId)
         {
             var currentCart = TryGetByUserId(userId);
             var currentCartItem = currentCart.CartItems.FirstOrDefault(x => x.Product.Id == productId);
@@ -57,7 +57,7 @@ namespace OnlineShop.DB
             databaseContext.SaveChangesAsync();
         }
 
-        public void IncreaseCountProduct(Guid productId, int userId)
+        public void IncreaseCountProduct(Guid productId, string userId)
         {
             var currentCart = TryGetByUserId(userId);
             var currentCartItem = currentCart.CartItems.FirstOrDefault(x => x.Product.Id == productId);
@@ -68,13 +68,13 @@ namespace OnlineShop.DB
             databaseContext.SaveChangesAsync();
         }
 
-        public CartDB TryGetByUserId(int id)
+        public CartDB TryGetByUserId(string userId)
         {
 
             return databaseContext.CartDBs.
                 Include(cart => cart.CartItems)
                 .ThenInclude(item => item.Product)
-                .FirstOrDefault(cart => cart.UserId == id);
+                .FirstOrDefault(cart => cart.UserId == userId);
             // return databaseContext.CartDBs.FirstOrDefault(cart => cart.UserId == id);
         }
 
