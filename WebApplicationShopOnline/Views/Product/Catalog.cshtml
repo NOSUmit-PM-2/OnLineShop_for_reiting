@@ -3,7 +3,10 @@
     <h2>Каталог</h2>
 
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-
+    <form asp-action="Catalog" method="get" class="form-inline mb-3">
+        <input type="number" name="maxPrice" class="form-control mr-2" placeholder="Макс. цена" />
+        <button type="submit" class="btn btn-primary">Поиск</button>
+    </form>
     @foreach(var product in Model)
     {
         <div class="col">

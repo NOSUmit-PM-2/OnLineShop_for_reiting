@@ -25,10 +25,15 @@ namespace WebApplicationShopOnline.Controllers
         }
 
 
-        public IActionResult Catalog() 
+        public IActionResult Catalog(decimal? maxPrice)
         {
-            List<ProductDB>products = productsRepository.GetAll();
-            //return View("CatalogSimple", products);
+            List<ProductDB> products = productsRepository.GetAll();
+
+            if (maxPrice.HasValue)
+            {
+                products = products.Where(p => p.Cost < maxPrice.Value).ToList();
+            }
+
             return View(Mapping.ToProductsList(products));
         }
     }
