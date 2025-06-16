@@ -56,7 +56,7 @@ namespace WebApplicationShopOnline.Controllers
             var cartItem = cartsRepository.TryGetCartItemByProductId(productId);
             if (cartItem != null)
             {
-                // Возвращаем товар в количество
+                //возврат товара в количство
                 var product = productsRepository.TryGetById(productId);
                 product.Quantity += 1;
                 productsRepository.Update(product);     

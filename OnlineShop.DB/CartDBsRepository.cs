@@ -89,7 +89,12 @@ namespace OnlineShop.DB
 
         CartItemDB ICartDBsRepository.TryGetCartItemByProductId(Guid productId)
         {
-            throw new NotImplementedException();
+            return databaseContext.CartDBs
+                .SelectMany(cart => cart.CartItems) 
+                .Include(item => item.Product) 
+                .FirstOrDefault(item => item.Product.Id == productId); 
         }
+
+
     }
 }
