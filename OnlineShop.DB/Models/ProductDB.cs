@@ -9,5 +9,6 @@ namespace OnlineShop.DB
         public string Description { get; set; }
         public decimal Cost { get; set; }
         public string PathPicture { get; set; }
+        public int Quantity { get; set; }
     }
 }

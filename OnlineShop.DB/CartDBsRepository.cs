@@ -86,5 +86,15 @@ namespace OnlineShop.DB
             item.Amount = 1;
             return item;
         }
+
+        CartItemDB ICartDBsRepository.TryGetCartItemByProductId(Guid productId)
+        {
+            return databaseContext.CartDBs
+                .SelectMany(cart => cart.CartItems) 
+                .Include(item => item.Product) 
+                .FirstOrDefault(item => item.Product.Id == productId); 
+        }
+
+
     }
 }
