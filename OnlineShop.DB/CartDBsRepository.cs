@@ -37,7 +37,7 @@ namespace OnlineShop.DB
                     currentCartItem.Amount += 1;
                 }
             }
-            databaseContext.SaveChangesAsync();
+            databaseContext.SaveChanges();
 
         }
 
@@ -54,7 +54,7 @@ namespace OnlineShop.DB
                     currentCart.CartItems.Remove(currentCartItem);
                 }
             }
-            databaseContext.SaveChangesAsync();
+            databaseContext.SaveChanges();
         }
 
         public void IncreaseCountProduct(Guid productId, int userId)
@@ -65,7 +65,7 @@ namespace OnlineShop.DB
             {
                 currentCartItem.Amount += 1;
             }
-            databaseContext.SaveChangesAsync();
+            databaseContext.SaveChanges();
         }
 
         public CartDB TryGetByUserId(int id)

@@ -22,7 +22,8 @@ namespace WebApplicationShopOnline.Controllers
 
         public IActionResult Index(int id)
         {
-            Cart cart = Mapping.ToCart(cartsRepository.TryGetByUserId(1));
+            CartDB cartDb = cartsRepository.TryGetByUserId(1);
+            Cart cart = cartDb == null ? null : Mapping.ToCart(cartDb);
             return View(cart);
         }
 
