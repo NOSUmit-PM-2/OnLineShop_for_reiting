@@ -16,17 +16,20 @@ builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<Data
 builder.Services.AddTransient<IProductDBsRepository, ProductsDBRepository>();
 
 builder.Services.AddTransient<ICartDBsRepository, CartDBsRepository>();
+builder.Services.AddTransient<IFavProductsDBRepository, FavProductsDBRepository>();
 
 
 var app = builder.Build();
 
 
-// Вызов инициализации БД 
 using (var scope = app.Services.CreateScope())
 {
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
     IdentityInitializer.Initialize(userManager, roleManager);
+
+    var dbContext = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
+    dbContext.SeedProducts();
 }
 
 // Configure the HTTP request pipeline.

@@ -84,5 +84,10 @@ namespace WebApplicationShopOnline.Helpers
                 Amount = item.Amount
             };
         }
+
+        public static List<Product> ToFavProductsList(List<ProductDB> products)
+        {
+            return products.Select(ToProduct).ToList();
+        }
     }
 }

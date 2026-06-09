@@ -1,6 +1,6 @@
 ﻿@model List<Product>
 
-    <h2>Каталог</h2>
+<h2>Каталог</h2>
 
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 
@@ -8,7 +8,7 @@
     {
         <div class="col">
             <div class="card shadow-sm">
-                    <img src="@product.PathPicture">
+                    <img src="@product.PathPicture" class="card-img-top">
 
                 <div class="card-body">
                         <h4>@product.Name</h4>
@@ -22,13 +22,18 @@
                                asp-action="Index" 
                                asp-route-id="@product.Id"
                                role="button">Подробнее</a>
-                            <a class="btn btn-primary"
-                               asp-area=""
-                               asp-controller="Cart"
-                               asp-action="Add"
-                               asp-route-id="@product.Id"
-                               role="button">В корзину</a>
-                         
+                             <a class="btn btn-primary"
+                                asp-area=""
+                                asp-controller="Cart"
+                                asp-action="Add"
+                                asp-route-id="@product.Id"
+                                role="button">В корзину</a>
+                             <a class="btn btn-outline-danger"
+                                asp-area=""
+                                asp-controller="Fav"
+                                asp-action="Add"
+                                asp-route-id="@product.Id"
+                                role="button">В избранное</a>
                         </div>
                             <small class="text-muted">@product.Cost р.</small>
                     </div>
