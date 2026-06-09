@@ -69,7 +69,8 @@ namespace OnlineShop.DB
             {
                 currentCartItem.Amount += 1;
             }
-            databaseContext.SaveChangesAsync();
+            databaseContext.SaveChanges();
+
         }
 
         public CartDB TryGetByUserId(int id)
