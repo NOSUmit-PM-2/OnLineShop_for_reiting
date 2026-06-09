@@ -67,6 +67,10 @@ namespace WebApplicationShopOnline.Helpers
 
         public static Cart ToCart(CartDB cart)
         {
+            if (cart == null)
+            {
+                return null;
+            }
             return new Cart
             {
                 Id = cart.Id,
