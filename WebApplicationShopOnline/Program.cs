@@ -16,12 +16,13 @@ builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<Data
 builder.Services.AddTransient<IProductDBsRepository, ProductsDBRepository>();
 
 builder.Services.AddTransient<ICartDBsRepository, CartDBsRepository>();
+builder.Services.AddTransient<IFavProductsDBRepository, FavProductsDBRepository>();
 
 
 var app = builder.Build();
 
 
-// Вызов инициализации БД 
+// пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ 
 using (var scope = app.Services.CreateScope())
 {
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();

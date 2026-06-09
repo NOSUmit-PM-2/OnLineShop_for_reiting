@@ -22,13 +22,18 @@
                                asp-action="Index" 
                                asp-route-id="@product.Id"
                                role="button">Подробнее</a>
-                            <a class="btn btn-primary"
-                               asp-area=""
-                               asp-controller="Cart"
-                               asp-action="Add"
-                               asp-route-id="@product.Id"
-                               role="button">В корзину</a>
-                         
+                             <a class="btn btn-primary"
+                                asp-area=""
+                                asp-controller="Cart"
+                                asp-action="Add"
+                                asp-route-id="@product.Id"
+                                role="button">В корзину</a>
+                             <a class="btn btn-outline-danger"
+                                asp-area=""
+                                asp-controller="Fav"
+                                asp-action="Add"
+                                asp-route-id="@product.Id"
+                                role="button">♥ В избранное</a>
                         </div>
                             <small class="text-muted">@product.Cost р.</small>
                     </div>
