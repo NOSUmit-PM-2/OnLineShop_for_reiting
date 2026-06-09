@@ -1,0 +1,57 @@
+﻿@model List<WebApplicationShopOnline.Models.Product>
+
+@{
+    ViewData["Title"] = "Сравнение товаров";
+}
+
+<h2>Сравнение товаров</h2>
+
+@if (Model == null || Model.Count == 0)
+{
+    <div class="alert alert-info">
+        Нет товаров для сравнения. <a href="@Url.Action("Catalog", "Product")">Перейти в каталог</a>
+    </div>
+}
+else
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Характеристика</th>
+                <th>@Model[0].Name</th>
+                @if (Model.Count > 1)
+                {
+                    <th>@Model[1].Name</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Название</td>
+                <td>@Model[0].Name</td>
+                @if (Model.Count > 1)
+                {
+                    <td>@Model[1].Name</td>
+                }
+            </tr>
+            <tr>
+                <td>Описание</td>
+                <td>@Model[0].Description</td>
+                @if (Model.Count > 1)
+                {
+                    <td>@Model[1].Description</td>
+                }
+            </tr>
+            <tr>
+                <td>Цена</td>
+                <td>@Model[0].Cost руб.</td>
+                @if (Model.Count > 1)
+                {
+                    <td>@Model[1].Cost руб.</td>
+                }
+            </tr>
+        </tbody>
+    </table>
+}
+
+<a href="@Url.Action("Catalog", "Product")" class="btn btn-secondary">Назад в каталог</a>

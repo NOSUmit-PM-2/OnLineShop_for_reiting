@@ -1,35 +1,48 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Hosting;
-using OnlineShop.DB;
-using System.Diagnostics;
-using System.Xml.Linq;
-using WebApplicationShopOnline.Data;
-using WebApplicationShopOnline.Helpers;
 using WebApplicationShopOnline.Models;
+using WebApplicationShopOnline.Repositories;
+using WebApplicationShopOnline.Helpers;
 
 namespace WebApplicationShopOnline.Controllers
 {
     public class ProductController : Controller
     {
-        readonly IProductDBsRepository productsRepository;
+        private readonly ProductMemoryRepository _productRepository;
 
-        public ProductController(IProductDBsRepository prodRepo)
+        public ProductController(ProductMemoryRepository productRepository)
         {
-            this.productsRepository = prodRepo;
+            _productRepository = productRepository;
         }
 
-        public IActionResult Index(Guid id)
+        public IActionResult Catalog()
         {
-            Product prod = Mapping.ToProduct(productsRepository.TryGetById(id));
-            return View(prod);
+            var products = _productRepository.GetAll();
+            return View(products);
         }
 
-
-        public IActionResult Catalog() 
+        public IActionResult AddToCompare(Guid id)
         {
-            List<ProductDB>products = productsRepository.GetAll();
-            //return View("CatalogSimple", products);
-            return View(Mapping.ToProductsList(products));
+            var product = _productRepository.GetById(id);
+
+            if (product == null)
+                return NotFound();
+
+            List<Product> compareList = HttpContext.Session.GetObject<List<Product>>("CompareList") ?? new List<Product>();
+
+            if (!compareList.Any(p => p.Id == id))
+            {
+                compareList.Insert(0, product);
+                compareList = compareList.Take(2).ToList();
+                HttpContext.Session.SetObject("CompareList", compareList);
+            }
+
+            return RedirectToAction("Catalog");
+        }
+
+        public IActionResult Compare()
+        {
+            List<Product> compareList = HttpContext.Session.GetObject<List<Product>>("CompareList") ?? new List<Product>();
+            return View(compareList);
         }
     }
 }
