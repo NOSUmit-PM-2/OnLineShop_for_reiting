@@ -24,12 +24,19 @@ namespace WebApplicationShopOnline.Controllers
             return View(prod);
         }
 
-
-        public IActionResult Catalog() 
+        public IActionResult Catalog(decimal? maxPrice)
         {
-            List<ProductDB>products = productsRepository.GetAll();
-            //return View("CatalogSimple", products);
-            return View(Mapping.ToProductsList(products));
+            List<ProductDB> products = productsRepository.GetAll();
+            List<Product> productViewModels = Mapping.ToProductsList(products);
+
+            if (maxPrice.HasValue && maxPrice.Value > 0)
+            {
+                productViewModels = productViewModels.Where(p => p.Cost <= maxPrice.Value).ToList();
+            }
+
+            ViewBag.MaxPrice = maxPrice;
+
+            return View(productViewModels);
         }
     }
 }
