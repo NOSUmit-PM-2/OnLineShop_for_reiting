@@ -30,7 +30,11 @@ namespace OnlineShop.DB
                 var currentCartItem = currentCart.CartItems.FirstOrDefault(x => x.Product.Id == product.Id);
                 if (currentCartItem == null)
                 {
-                    currentCart.CartItems.Add(AddItem(product));
+                    CartItemDB item = new CartItemDB();
+                    item.Id = Guid.NewGuid();
+                    item.Product = product;
+                    item.Amount = 1;
+                    currentCart.CartItems.Add(item);
                 }
                 else
                 {
