@@ -1,6 +1,6 @@
 ﻿@model List<Product>
 
-    <h2>Каталог</h2>
+<h2>Каталог</h2>
 
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 
@@ -33,7 +33,7 @@
                                 asp-controller="Fav"
                                 asp-action="Add"
                                 asp-route-id="@product.Id"
-                                 role="button">В избранное</a>
+                                role="button">В избранное</a>
                         </div>
                             <small class="text-muted">@product.Cost р.</small>
                     </div>
