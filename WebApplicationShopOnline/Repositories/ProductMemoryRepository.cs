@@ -60,7 +60,7 @@ namespace WebApplicationShopOnline.Repositories
             {
                 Id = Guid.NewGuid(),
                 Name = "Пицца",
-                Description = "Классическая пицца Маргарита с томатным соусом и моцареллой.",
+                Description = "Классическая пицца Маргарита с томатным соусом и моцареллой!",
                 Cost = 400,
                 PathPicture = "https://static.pizzasushiwok.ru/images/menu_new/588-1300.jpg"
             },
@@ -68,7 +68,7 @@ namespace WebApplicationShopOnline.Repositories
             {
                 Id = Guid.NewGuid(),
                 Name = "Салат",
-                Description = "Легкий салат Цезарь с листьями салата, куриной грудкой и соусом Цезарь.",
+                Description = "Легкий салат Цезарь с листьями салата.",
                 Cost = 180,
                 PathPicture = "https://img.freepik.com/premium-photo/summer-green-salad-white-bowl-plate-isolated-white-backgorund-healty-salat-from-tomato-spinach-onion-green-leaves-with-oil-dinner-lunch-vegetarian-food-concept-top-view_335758-59.jpg"
             },
@@ -118,5 +118,6 @@ namespace WebApplicationShopOnline.Repositories
             existingProduct.Cost = product.Cost;
             existingProduct.PathPicture = product.PathPicture;
         }
+        //bye-bye
     }
 }
