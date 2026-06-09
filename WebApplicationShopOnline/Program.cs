@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using OnlineShop.DB;
 using OnlineShop.DB.Models;
 using WebApplicationShopOnline.Data;
+using WebApplicationShopOnline.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +17,19 @@ builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<Data
 builder.Services.AddTransient<IProductDBsRepository, ProductsDBRepository>();
 
 builder.Services.AddTransient<ICartDBsRepository, CartDBsRepository>();
+
+
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddDistributedMemoryCache(); 
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30); 
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
+builder.Services.AddScoped<IComparisonRepository, ComparisonInMemoryRepository>();
+builder.Services.AddScoped<IProductsRepository, ProductsRepositoryFromDB>();
 
 
 var app = builder.Build();
