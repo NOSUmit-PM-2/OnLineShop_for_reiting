@@ -42,5 +42,9 @@ namespace OnlineShop.DB
             existingProduct.PathPicture = product.PathPicture;
             dbContext.SaveChanges();
         }
+        public List<ProductDB> TryGetByPrise(int min,int max)
+        {
+            return dbContext.ProductDBs.Where(i => i.Cost > min && i.Cost < max).ToList();
+        }
     }
 }

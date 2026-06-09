@@ -31,5 +31,12 @@ namespace WebApplicationShopOnline.Controllers
             //return View("CatalogSimple", products);
             return View(Mapping.ToProductsList(products));
         }
+
+        public IActionResult Sort(int min, int max)
+        {
+
+
+            return RedirectToAction("Catalog");
+        }
     }
 }

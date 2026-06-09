@@ -1,6 +1,11 @@
 ﻿@model List<Product>
 
     <h2>Каталог</h2>
+<form asp-controller="Product" asp-action="Sort">
+    <input type="number" name="min"/>
+    <input type="number" name="max"/>
+    <button type="submit">найти</button>
+</form>
 
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 
