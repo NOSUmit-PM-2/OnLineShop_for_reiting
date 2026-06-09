@@ -69,7 +69,7 @@ namespace WebApplicationShopOnline.Controllers
 
             productsRepository.Updata(Mapping.ToProductDB(product));
             _logger.LogInformation("Продукт был обновлен");
-            return RedirectToAction("Index", "Product", new { id = product.Id });
+            return RedirectToAction("Products");
         }
 
 
