@@ -3,6 +3,7 @@ using Microsoft.Extensions.Hosting;
 using OnlineShop.DB;
 using System.Diagnostics;
 using System.Xml.Linq;
+using System.Linq;
 using WebApplicationShopOnline.Data;
 using WebApplicationShopOnline.Helpers;
 using WebApplicationShopOnline.Models;
@@ -11,25 +12,32 @@ namespace WebApplicationShopOnline.Controllers
 {
     public class ProductController : Controller
     {
-        readonly IProductDBsRepository productsRepository;
+        readonly IProductsRepository productsRepository; 
 
-        public ProductController(IProductDBsRepository prodRepo)
+        public ProductController(IProductsRepository prodRepo)  
         {
             this.productsRepository = prodRepo;
         }
 
         public IActionResult Index(Guid id)
         {
-            Product prod = Mapping.ToProduct(productsRepository.TryGetById(id));
+            Product prod = productsRepository.TryGetById(id); 
             return View(prod);
         }
 
-
-        public IActionResult Catalog() 
+        public IActionResult Catalog()
         {
-            List<ProductDB>products = productsRepository.GetAll();
-            //return View("CatalogSimple", products);
-            return View(Mapping.ToProductsList(products));
+            List<Product> products = productsRepository.GetAll();  
+            return View(products); 
+        }
+
+        public IActionResult SortByName()
+        {
+            List<Product> products = productsRepository.GetAll();  
+
+            var sortedProducts = products.OrderBy(p => p.Name).ToList();
+
+            return View("Catalog", sortedProducts); 
         }
     }
 }

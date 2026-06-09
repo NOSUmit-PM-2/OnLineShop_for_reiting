@@ -13,7 +13,7 @@ builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(c
 
 builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<DatabaseContext>();
 
-builder.Services.AddTransient<IProductDBsRepository, ProductsDBRepository>();
+builder.Services.AddTransient<IProductsRepository, ProductsInMemoryRepository>();
 
 builder.Services.AddTransient<ICartDBsRepository, CartDBsRepository>();
 
