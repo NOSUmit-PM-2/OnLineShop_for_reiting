@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
 using OnlineShop.DB;
+using System.Data;
 using System.Diagnostics;
 using System.Xml.Linq;
 using WebApplicationShopOnline.Data;
@@ -13,16 +14,19 @@ namespace WebApplicationShopOnline.Controllers
     {
         readonly IProductDBsRepository productsRepository;
         readonly ICartDBsRepository cartsRepository;
+        private readonly ILogger<CartController> _logger;
 
-        public CartController(IProductDBsRepository prodRepo, ICartDBsRepository cartsRepository)
+        public CartController(IProductDBsRepository prodRepo, ICartDBsRepository cartsRepository, ILogger<CartController> logger)
         {
             this.productsRepository = prodRepo;
             this.cartsRepository = cartsRepository;
+            _logger = logger;
         }
 
         public IActionResult Index(int id)
         {
             Cart cart = Mapping.ToCart(cartsRepository.TryGetByUserId(1));
+            _logger.LogInformation("User with id {id} opened the cart page", id);
             return View(cart);
         }
 
@@ -30,18 +34,21 @@ namespace WebApplicationShopOnline.Controllers
         {
             ProductDB product = productsRepository.TryGetById(id);
             cartsRepository.Add(product, 1);
+            _logger.LogInformation("User with id {id} added product with id {productId} to the cart", 1, id);
             return RedirectToAction("Index");
         }
 
         public IActionResult IncreaseCountProduct(Guid productId)
         {
             cartsRepository.IncreaseCountProduct(productId, 1);
+            _logger.LogInformation("User with id {id} increased count of product with id {productId} in the cart", 1, productId);
             return RedirectToAction("Index");
         }
 
         public IActionResult DecreaseCountProduct(Guid productId)
         {
             cartsRepository.DecreaseCountProduct(productId, 1);
+            _logger.LogInformation("User with id {id} decreased count of product with id {productId} in the cart", 1, productId);
             return RedirectToAction("Index");
         }
     }

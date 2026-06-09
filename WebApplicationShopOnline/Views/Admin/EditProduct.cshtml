@@ -7,24 +7,25 @@
         <h2>Редатировать продукт</h2>
         <form asp-action="EditProduct" asp-controller="admin">
             <div class="mb-3">
-                <label class="form-label">Id продукта</label>
-                <input type="text" class="form-control" name="Id" value="@Model.Id">
-            </div>
-            <div class="mb-3">
                 <label class="form-label">Название продукта</label>
-                <input type="text" class="form-control" name="Name" value="@Model.Name">
+                <input type="text" class="form-control" name="Name" asp-for="Name">
+                <span class="text-danger" asp-validation-for="Name"></span>
+
             </div>
             <div class="mb-3">
                 <label class="form-label">Описание продукта</label>
-                <input type="text" class="form-control" name="Description" value="@Model.Description">
+                <input type="text" class="form-control" asp-for="Description" asp-validation-for="Description" name="Description">
+                <span class="text-danger" asp-validation-for="Description"></span>
             </div>
             <div class="mb-3">
                 <label class="form-label">Цена</label>
-                <input type="number" class="form-control" name="Cost" value="@Model.Cost">
+                <input type="number" class="form-control" asp-for="Cost" name="Cost">
+                <span class="text-danger" asp-validation-for="Cost"></span>
             </div>
             <div class="mb-3">
                 <label class="form-label">URL картинки</label>
-                <input type="text" class="form-control" name="PathPicture" value="@Model.PathPicture">
+                <input type="text" class="form-control" asp-for="PathPicture" name="PathPicture">
+                <span class="text-danger" asp-validation-for="PathPicture"></span>
             </div>
             <button type="submit" class="btn btn-primary">Сохранить</button>
         </form>
