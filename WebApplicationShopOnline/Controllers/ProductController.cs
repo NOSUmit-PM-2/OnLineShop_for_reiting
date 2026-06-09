@@ -35,8 +35,8 @@ namespace WebApplicationShopOnline.Controllers
         public IActionResult Sort(int min, int max)
         {
 
-
-            return RedirectToAction("Catalog");
+            List<ProductDB> prod = productsRepository.TryGetByPrice(min, max);
+            return View("Catalog", Mapping.ToProductsList(prod));
         }
     }
 }
