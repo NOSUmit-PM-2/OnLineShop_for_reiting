@@ -1,0 +1,19 @@
+﻿@model OnlineShop.DB.Models.Product
+
+@{
+    ViewData["Title"] = "Детали товара";
+}
+
+<h1>@Model.Name</h1>
+
+<div style="border: 1px solid #ddd; padding: 20px; border-radius: 8px;">
+    <p><strong>Описание:</strong> @Model.Description</p>
+    <p><strong>Цена:</strong> @Model.Price руб.</p>
+    <p><strong>Категория:</strong> @Model.Category</p>
+
+    <a href="@Url.Action("Catalog", "Product")"
+       style="display: inline-block; margin-top: 20px; text-decoration: none;
+              padding: 8px 16px; background-color: #6c757d; color: white; border-radius: 4px;">
+        ← Назад к каталогу
+    </a>
+</div>
