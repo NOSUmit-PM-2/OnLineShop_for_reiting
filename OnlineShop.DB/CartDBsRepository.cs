@@ -14,36 +14,44 @@ namespace OnlineShop.DB
 
         public void Add(ProductDB product, int userId)
         {
-            var currentCart = TryGetByUserId(userId);
+            var existingCart = TryGetByUserId(userId);
 
-            if (currentCart == null)
+            var newCartItem = new CartItemDB()
             {
-                var newCart = new CartDB();
-                newCart.Id = Guid.NewGuid();
-                newCart.UserId = userId;
-                newCart.CartItems = new List<CartItemDB>();
-                newCart.CartItems.Add(AddItem(product));
-                databaseContext.CartDBs.Add(newCart);
+                Product = product,
+                Amount = 1,
+                Cart = existingCart
+            };
+
+            if (existingCart == null)
+            {
+                var cartItems = new List<CartItemDB>();
+                cartItems.Add(newCartItem);
+                existingCart = new CartDB()
+                {
+                    UserId = userId,
+                    CartItems = cartItems
+                };
+
+                databaseContext.CartDBs.Add(existingCart);
             }
             else
             {
-                var currentCartItem = currentCart.CartItems.FirstOrDefault(x => x.Product.Id == product.Id);
-                if (currentCartItem == null)
+                var existingCartItem = existingCart.CartItems
+                    .FirstOrDefault(item => item.Product.Id == product.Id);
+
+                if (existingCartItem == null)
                 {
-                    CartItemDB item = new CartItemDB();
-                    item.Id = Guid.NewGuid();
-                    item.Product = product;
-                    item.Amount = 1;
-                    currentCart.CartItems.Add(item);
+                    existingCart.CartItems.Add(newCartItem);
                 }
                 else
                 {
-                    currentCartItem.Amount += 1;
+                    existingCartItem.Amount++;
                 }
             }
-            databaseContext.SaveChangesAsync();
-
+            databaseContext.SaveChanges(); 
         }
+
 
 
         public void DecreaseCountProduct(Guid productId, int userId)
