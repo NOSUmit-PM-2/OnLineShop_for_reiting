@@ -8,7 +8,7 @@
     {
         <div class="col">
             <div class="card shadow-sm">
-                    <img src="@product.PathPicture">
+                    <img src="@product.PathPicture" class="card-img-top">
 
                 <div class="card-body">
                         <h4>@product.Name</h4>
@@ -33,7 +33,7 @@
                                 asp-controller="Fav"
                                 asp-action="Add"
                                 asp-route-id="@product.Id"
-                                role="button">♥ В избранное</a>
+                                 role="button">В избранное</a>
                         </div>
                             <small class="text-muted">@product.Cost р.</small>
                     </div>

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using OnlineShop.DB;
+using WebApplicationShopOnline.Helpers;
 
 namespace WebApplicationShopOnline.Controllers
 {
@@ -14,11 +15,23 @@ namespace WebApplicationShopOnline.Controllers
             this.productsRepository = productsRepository;
         }
 
+        public IActionResult Index()
+        {
+            var products = favRepository.GetAll();
+            return View(Mapping.ToFavProductsList(products));
+        }
+
         public IActionResult Add(Guid id)
         {
             var product = productsRepository.TryGetById(id);
             favRepository.Add(product);
             return RedirectToAction("Catalog", "Product");
+        }
+
+        public IActionResult Remove(Guid id)
+        {
+            favRepository.Remove(id);
+            return RedirectToAction("Index");
         }
     }
 }
