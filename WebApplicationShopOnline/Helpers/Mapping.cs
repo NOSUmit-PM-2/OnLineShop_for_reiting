@@ -7,7 +7,7 @@ namespace WebApplicationShopOnline.Helpers
     {
         public static Product ToProduct(ProductDB product)
         {
-            return new Product
+            var temp = new Product()
             {
                 Id = product.Id,
                 Name = product.Name,
@@ -15,6 +15,7 @@ namespace WebApplicationShopOnline.Helpers
                 Description = product.Description,
                 PathPicture = product.PathPicture
             };
+            return temp;
         }
 
         public static ProductDB ToProductDB(Product product)
