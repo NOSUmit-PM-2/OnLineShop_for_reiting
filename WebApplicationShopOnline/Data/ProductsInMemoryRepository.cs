@@ -1,49 +1,64 @@
-﻿using System.Linq;
-using System.Text.Encodings.Web;
-using System.Text.Json;
+﻿using System.Text.Json;
+using WebApplicationShopOnline.Data;
 using WebApplicationShopOnline.Models;
 
-namespace WebApplicationShopOnline.Data
+public class ComparisonInMemoryRepository : IComparisonRepository
 {
-    public class ProductsInMemoryRepository : IProductsRepository
+    private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly IProductsRepository _productsRepository;
+    private const string SessionKey = "_ComparisonList";
+
+    public ComparisonInMemoryRepository(IHttpContextAccessor httpContextAccessor, IProductsRepository productsRepository)
     {
-        static List<Product> products = new List<Product>();
-        //{
-        //    new Product("Чебурек", "с сыром", 120, "https://swlife.ru/image/cache/catalog/product/02/55/02550518f7517f25a9a7f5da33644fd6-0x0.webp"),
-        //    new Product("Пирожок", "с ливером", 50, "https://slastenabakery.ru/image/cache/catalog/tovar/pirozhok-kuritsa-652x495.jpg"),
-        //    new Product("Шаурма", "классическая", 400, "/images/saurma.jpg"),
-        //    new Product("Шаурма", "детская", 340, "/images/saurma.jpg")
-        //};
+        _httpContextAccessor = httpContextAccessor;
+        _productsRepository = productsRepository;
+    }
 
-        public List<Product> GetAll()
-        {
-            return products;
-        }
+    private List<Guid> GetListFromSession()
+    {
+        var session = _httpContextAccessor.HttpContext.Session;
+        var json = session.GetString(SessionKey);
+        return string.IsNullOrEmpty(json) ? new List<Guid>() : JsonSerializer.Deserialize<List<Guid>>(json);
+    }
 
-        public Product TryGetById(Guid id)
-        {
-            return products.FirstOrDefault(x => x.Id == id);
-        }
+    private void SaveListToSession(List<Guid> ids)
+    {
+        var session = _httpContextAccessor.HttpContext.Session;
+        session.SetString(SessionKey, JsonSerializer.Serialize(ids));
+    }
 
-        public void Add(Product product)
-        {
-            products.Add(product);
-        }
+    public void Add(Guid productId)
+    {
+        var ids = GetListFromSession();
+        ids.Remove(productId);
+        ids.Add(productId);
+        SaveListToSession(ids);
+    }
 
-        public void Updata(ProductEdit product)
-        {
-            var existingProduct = products.FirstOrDefault(x => x.Id == product.Id);
-            if (existingProduct == null)
-            {
-                return;
-            }
-            existingProduct.Name = product.Name;
-            existingProduct.Description = product.Description;
-            existingProduct.Cost = product.Cost;
-            existingProduct.PathPicture = product.PathPicture;
-        }
+    public void Remove(Guid productId)
+    {
+        var ids = GetListFromSession();
+        ids.Remove(productId);
+        SaveListToSession(ids);
+    }
 
-        
+    public List<Product> GetAll()
+    {
+        var ids = GetListFromSession();
+        return ids.Select(id => _productsRepository.TryGetById(id))
+                  .Where(p => p != null)
+                  .ToList();
+    }
 
+    public List<Product> GetLastTwo()
+    {
+        var all = GetAll();
+        return all.Skip(Math.Max(0, all.Count - 2)).ToList();
+    }
+
+    public bool IsInComparison(Guid productId)
+    {
+        var ids = GetListFromSession();
+        return ids.Contains(productId);
     }
 }

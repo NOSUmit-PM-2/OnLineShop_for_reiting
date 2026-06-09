@@ -62,5 +62,10 @@ namespace WebApplicationShopOnline.Data
             var ids = GetIdsFromSession();
             return ids.Contains(productId);
         }
+
+        public List<Product> GetLastTwo()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

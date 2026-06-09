@@ -27,11 +27,10 @@ namespace WebApplicationShopOnline.Data
 
         public void Add(Product product)
         {
-            // Не требуется для сравнения, можно оставить пустым или бросить NotImplementedException
             throw new NotImplementedException();
         }
 
-        public void Updata(ProductEdit product)   // обратите внимание на имя метода (Updata в интерфейсе? Проверьте)
+        public void Updata(ProductEdit product)
         {
             throw new NotImplementedException();
         }
