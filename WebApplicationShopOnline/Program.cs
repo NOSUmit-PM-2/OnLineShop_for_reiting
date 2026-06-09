@@ -17,6 +17,7 @@ builder.Services.AddTransient<IProductDBsRepository, ProductsDBRepository>();
 
 builder.Services.AddTransient<ICartDBsRepository, CartDBsRepository>();
 
+builder.Services.AddTransient<IFavoriteRepository, FavoriteRepository>();
 
 var app = builder.Build();
 
