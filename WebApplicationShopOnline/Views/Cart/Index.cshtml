@@ -42,9 +42,38 @@
                 } 
             </tbody>
         </table>
-        <a type="button" class="btn-outline-light"
-           asp-controller="Cart"
-           asp-action="IncreaseCountProduct"
-        ></a>
+       
         }
+    <button type ="button" class="btn-outline-dark" onclick="openModal()">Оформить заказ</button>
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>📍 Место доставки</h3>
+                <button class="close-modal" id="closeModalBtn" aria-label="Закрыть" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group">
+                    <label for="deliveryAddress">Введите адрес или пункт выдачи</label>
+                    <input type="text" id="deliveryAddress" class="delivery-input" placeholder="Например: ул. Пушкина, 12, кв. 45" autocomplete="off">
+                    <div class="input-hint">🏠 Точный адрес поможет курьеру быстрее доставить заказ</div>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn btn-secondary" id="cancelModalBtn" onclick="closeModal()">Отмена</button>
+                    <button class="btn btn-primary" id="saveAddressBtn">Сохранить</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+<script>
+    const modalOverlay = document.getElementById('modalOverlay');
+    function openModal() {
+        modalOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        modalOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+</script>
