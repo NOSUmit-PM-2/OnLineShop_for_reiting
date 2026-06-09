@@ -39,9 +39,12 @@
                                asp-route-productId="@cartItem.Product.Id">-</a>
                         </td>
                     </tr>
-                }
-                
+                } 
             </tbody>
         </table>
+        <a type="button" class="btn-outline-light"
+           asp-controller="Cart"
+           asp-action="IncreaseCountProduct"
+        ></a>
         }
 </div>
