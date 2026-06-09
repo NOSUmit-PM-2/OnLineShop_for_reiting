@@ -32,10 +32,10 @@ namespace WebApplicationShopOnline.Controllers
                     return RedirectToAction("Catalog", "Product");
                 }
             }
-            return View(login);
+            return RedirectToAction("Index", "Home");
         }
 
-   
+
         public IActionResult Login()
         {
             return View();
@@ -60,14 +60,25 @@ namespace WebApplicationShopOnline.Controllers
                     return RedirectToAction("Catalog", "Product");
                 }
             }
-            return View();
+            return RedirectToAction("Index", "Home");
         }
 
         public IActionResult Logout()
         {
-            _signInManager.SignOutAsync().Wait();   
+            _signInManager.SignOutAsync().Wait();
             return RedirectToAction("Catalog", "Product");
         }
 
+        public async Task<IActionResult> Profile()
+        {
+            var user = await _userManager.GetUserAsync(User);
+
+            if (user == null)
+            {
+                return Challenge();
+            }
+
+            return View(user);
+        }
     }
 }

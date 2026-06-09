@@ -1,0 +1,16 @@
+﻿@model OnlineShop.DB.Models.User;
+
+@{
+    ViewData["Title"] = "Личный кабинет";
+}
+
+<h2>Личный кабинет</h2>
+
+<div style="display: flex; align-items: center; gap: 20px;">
+    <img src="/images/default-avatar.png" alt="Аватар" width="120" height="120" style="border-radius: 50%; object-fit: cover;" />
+
+    <div>
+        <p><strong>Имя пользователя:</strong> @Model.UserName</p>
+        <p><strong>Email:</strong> @Model.Email</p>
+    </div>
+</div>

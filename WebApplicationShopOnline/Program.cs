@@ -25,8 +25,12 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
-    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-    IdentityInitializer.Initialize(userManager, roleManager);
+    var user = await userManager.FindByNameAsync("test@test.com");
+    if (user == null)
+    {
+        user = new User { UserName = "test@test.com", Email = "test@test.com" };
+        await userManager.CreateAsync(user, "Password123!");
+    }
 }
 
 // Configure the HTTP request pipeline.
@@ -46,3 +50,12 @@ app.MapControllerRoute(
     pattern: "{controller=Product}/{action=Catalog}/{id?}");
 
 app.Run();
+
+/*var user = await userManager.FindByNameAsync("test@test.com");
+if (user == null)
+{
+    user = new User { UserName = "test@test.com", Email = "test@test.com" };
+    await userManager.CreateAsync(user, "Password123!");
+}*/
+/*var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    IdentityInitializer.Initialize(userManager, roleManager);*/
