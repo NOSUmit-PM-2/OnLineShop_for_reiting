@@ -30,14 +30,16 @@ namespace OnlineShop.DB
                 var currentCartItem = currentCart.CartItems.FirstOrDefault(x => x.Product.Id == product.Id);
                 if (currentCartItem == null)
                 {
-                    currentCart.CartItems.Add(AddItem(product));
+                    var newItem = AddItem(product);
+                    currentCart.CartItems.Add(newItem);
+                    databaseContext.CartItemDBs.Add(newItem);
                 }
                 else
                 {
                     currentCartItem.Amount += 1;
                 }
             }
-            databaseContext.SaveChangesAsync();
+            databaseContext.SaveChanges();
 
         }
 
@@ -51,10 +53,10 @@ namespace OnlineShop.DB
                 currentCartItem.Amount -= 1;
                 if (currentCartItem.Amount == 0)
                 {
-                    currentCart.CartItems.Remove(currentCartItem);
+                    databaseContext.CartItemDBs.Remove(currentCartItem);
                 }
             }
-            databaseContext.SaveChangesAsync();
+            databaseContext.SaveChanges();
         }
 
         public void IncreaseCountProduct(Guid productId, int userId)
@@ -65,7 +67,7 @@ namespace OnlineShop.DB
             {
                 currentCartItem.Amount += 1;
             }
-            databaseContext.SaveChangesAsync();
+            databaseContext.SaveChanges();
         }
 
         public CartDB TryGetByUserId(int id)
