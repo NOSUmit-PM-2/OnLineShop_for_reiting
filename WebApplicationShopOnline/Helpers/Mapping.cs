@@ -69,9 +69,9 @@ namespace WebApplicationShopOnline.Helpers
         {
             return new Cart
             {
-                //Id = cart.Id,
-                //UserId = cart.UserId,
-                //CartItems = cart.CartItems?.Select(item => ToCartItem(item)).ToList()
+                Id = cart.Id,
+                UserId = cart.UserId,
+                CartItems = cart.CartItems?.Select(item => ToCartItem(item)).ToList()
             };
         }
 

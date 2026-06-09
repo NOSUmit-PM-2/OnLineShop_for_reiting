@@ -25,6 +25,7 @@ namespace WebApplicationShopOnline.Controllers
             if (cartsRepository.TryGetByUserId(1) != null)
             {
                 Cart cart = Mapping.ToCart(cartsRepository.TryGetByUserId(1));
+                return View(cart);
             }
             return View();
         }
