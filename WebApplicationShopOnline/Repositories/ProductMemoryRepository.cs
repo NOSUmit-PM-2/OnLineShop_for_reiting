@@ -86,7 +86,7 @@ namespace WebApplicationShopOnline.Repositories
                 Name = "Торт",
                 Description = "вкусный, вкусный",
                 Cost = 123,
-                PathPicture = "https://moretorg55.ru/d/1639260134_16-papik-pro-p-pelmeni-klipart-26.jpg"
+                PathPicture = "https://fons.grizly.club/uploads/posts/2025-06/04/17490488600575.jpg"
             }
         };
 
