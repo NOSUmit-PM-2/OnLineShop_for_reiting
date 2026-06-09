@@ -9,13 +9,14 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 string connection = builder.Configuration.GetConnectionString("DBonlineShop");
+
 builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(connection));
 
 builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<DatabaseContext>();
 
-builder.Services.AddTransient<IProductDBsRepository, ProductsDBRepository>();
+builder.Services.AddScoped<IProductDBsRepository, ProductsDBRepository>();
 
-builder.Services.AddTransient<ICartDBsRepository, CartDBsRepository>();
+builder.Services.AddScoped<ICartDBsRepository, CartDBsRepository>();
 
 
 var app = builder.Build();

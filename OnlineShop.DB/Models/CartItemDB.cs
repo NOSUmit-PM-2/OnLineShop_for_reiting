@@ -7,5 +7,6 @@ namespace OnlineShop.DB
         public Guid Id { get; set; }
         public ProductDB Product { get; set; }
         public int Amount { get; set; }
+        public CartDB Cart { get; set; }
     }
 }

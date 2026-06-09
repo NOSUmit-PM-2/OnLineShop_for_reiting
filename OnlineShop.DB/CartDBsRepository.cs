@@ -14,32 +14,44 @@ namespace OnlineShop.DB
 
         public void Add(ProductDB product, int userId)
         {
-            var currentCart = TryGetByUserId(userId);
+            var existingCart = TryGetByUserId(userId);
 
-            if (currentCart == null)
+            var newCartItem = new CartItemDB()
             {
-                var newCart = new CartDB();
-                newCart.Id = Guid.NewGuid();
-                newCart.UserId = userId;
-                newCart.CartItems = new List<CartItemDB>();
-                newCart.CartItems.Add(AddItem(product));
-                databaseContext.CartDBs.Add(newCart);
+                Product = product,
+                Amount = 1,
+                Cart = existingCart
+            };
+
+            if (existingCart == null)
+            {
+                var cartItems = new List<CartItemDB>();
+                cartItems.Add(newCartItem);
+                existingCart = new CartDB()
+                {
+                    UserId = userId,
+                    CartItems = cartItems
+                };
+
+                databaseContext.CartDBs.Add(existingCart);
             }
             else
             {
-                var currentCartItem = currentCart.CartItems.FirstOrDefault(x => x.Product.Id == product.Id);
-                if (currentCartItem == null)
+                var existingCartItem = existingCart.CartItems
+                    .FirstOrDefault(item => item.Product.Id == product.Id);
+
+                if (existingCartItem == null)
                 {
-                    currentCart.CartItems.Add(AddItem(product));
+                    existingCart.CartItems.Add(newCartItem);
                 }
                 else
                 {
-                    currentCartItem.Amount += 1;
+                    existingCartItem.Amount++;
                 }
             }
-            databaseContext.SaveChangesAsync();
-
+            databaseContext.SaveChanges(); 
         }
+
 
 
         public void DecreaseCountProduct(Guid productId, int userId)
@@ -65,7 +77,8 @@ namespace OnlineShop.DB
             {
                 currentCartItem.Amount += 1;
             }
-            databaseContext.SaveChangesAsync();
+            databaseContext.SaveChanges();
+
         }
 
         public CartDB TryGetByUserId(int id)

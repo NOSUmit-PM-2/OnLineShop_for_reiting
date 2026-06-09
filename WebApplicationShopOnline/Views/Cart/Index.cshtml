@@ -4,7 +4,7 @@
     <h1 class="display-4">Корзина</h1>
     @if (Model == null || Model.CartItems.Count == 0)
         {
-            <h3>У вас еще нет покупок</h3>
+            <h3>У вас еще нет тоыаров в корзине</h3>
         }
     else
         {
@@ -40,7 +40,16 @@
                         </td>
                     </tr>
                 }
-                
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col">@Model.Cost</th>
+                </tr>
+            </thead>
             </tbody>
         </table>
         }
