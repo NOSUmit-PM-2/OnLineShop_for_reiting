@@ -71,7 +71,7 @@ namespace WebApplicationShopOnline.Helpers
             {
                 Id = cart.Id,
                 UserId = cart.UserId,
-                CartItems = cart.CartItems?.Select(item => ToCartItem(item)).ToList()
+                CartItems = cart.CartItems?.Select(item => ToCartItem(item)).ToList() 
             };
         }
 
