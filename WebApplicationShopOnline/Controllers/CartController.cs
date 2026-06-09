@@ -22,8 +22,11 @@ namespace WebApplicationShopOnline.Controllers
 
         public IActionResult Index(int id)
         {
-            Cart cart = Mapping.ToCart(cartsRepository.TryGetByUserId(1));
-            return View(cart);
+            if (cartsRepository.TryGetByUserId(1) != null)
+            {
+                Cart cart = Mapping.ToCart(cartsRepository.TryGetByUserId(1));
+            }
+            return View();
         }
 
         public IActionResult Add(Guid id)
