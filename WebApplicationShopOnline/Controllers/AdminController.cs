@@ -34,7 +34,12 @@ namespace WebApplicationShopOnline.Controllers
         [HttpPost]
         public IActionResult AddProduct(Product product)
         {
-        
+            if (product.Cost < 0)
+            {
+                ModelState.AddModelError("Cost", "Цена не может быть отрицательной!");
+                return View(product);
+            }
+
             if (ModelState.IsValid)
             {
                 productsRepository.Add(Mapping.ToProductDB(product));
@@ -56,6 +61,12 @@ namespace WebApplicationShopOnline.Controllers
         [HttpPost]
         public IActionResult EditProduct(Product product)
         {
+            if (product.Cost < 0)
+            {
+                ModelState.AddModelError("Cost", "Цена не может быть отрицательной!");
+                return View(product);
+            }
+
             productsRepository.Updata(Mapping.ToProductDB(product));
             return RedirectToAction("Index", "Product", new { product.Id });
         }
