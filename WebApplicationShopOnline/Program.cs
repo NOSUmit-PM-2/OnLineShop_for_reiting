@@ -24,9 +24,29 @@ var app = builder.Build();
 // Вызов инициализации БД 
 using (var scope = app.Services.CreateScope())
 {
-    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
-    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    var services = scope.ServiceProvider;
+
+
+    var dbContext = services.GetRequiredService<DatabaseContext>();
+    for (var attempt = 1; attempt <= 5; attempt++)
+    {
+        try
+        {
+            dbContext.Database.EnsureCreated();
+            break;
+        }
+        catch when (attempt < 5)
+        {
+            Thread.Sleep(2000);
+        }
+    }
+
+    var userManager = services.GetRequiredService<UserManager<User>>();
+    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
     IdentityInitializer.Initialize(userManager, roleManager);
+
+    var productsRepository = services.GetRequiredService<IProductDBsRepository>();
+    ProductInitializer.Initialize(productsRepository);
 }
 
 // Configure the HTTP request pipeline.

@@ -30,7 +30,9 @@ namespace OnlineShop.DB
                 var currentCartItem = currentCart.CartItems.FirstOrDefault(x => x.Product.Id == product.Id);
                 if (currentCartItem == null)
                 {
-                    currentCart.CartItems.Add(AddItem(product));
+                    var newItem = AddItem(product);
+                    currentCart.CartItems.Add(newItem);
+                    databaseContext.CartItemDBs.Add(newItem);
                 }
                 else
                 {
@@ -51,7 +53,7 @@ namespace OnlineShop.DB
                 currentCartItem.Amount -= 1;
                 if (currentCartItem.Amount == 0)
                 {
-                    currentCart.CartItems.Remove(currentCartItem);
+                    databaseContext.CartItemDBs.Remove(currentCartItem);
                 }
             }
             databaseContext.SaveChanges();

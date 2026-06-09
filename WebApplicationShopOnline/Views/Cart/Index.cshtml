@@ -2,12 +2,18 @@
 
 <div class="text-left">
     <h1 class="display-4">Корзина</h1>
-    @if (Model == null || Model.CartItems.Count == 0)
+    @if (Model == null || Model.CartItems == null || Model.CartItems.Count == 0)
         {
             <h3>У вас еще нет покупок</h3>
         }
     else
         {
+        <div class="btn-group mb-3" role="group" aria-label="Способ отображения корзины">
+            <button type="button" id="btnTableView" class="btn btn-dark" onclick="setCartView('table')">В виде таблицы</button>
+            <button type="button" id="btnCardsView" class="btn btn-outline-dark" onclick="setCartView('cards')">В виде карточек</button>
+        </div>
+
+        <div id="cartTableView">
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -20,10 +26,11 @@
                 </tr>
             </thead>
             <tbody>
+                    @{ var number = 1; }
                 @foreach (var cartItem in Model.CartItems)
                 {
                     <tr>
-                        <th scope="row">1</th>
+                            <th scope="row">@number</th>
                         <td>@cartItem.Product.Name</td>
                         <td>@cartItem.Product.Cost</td>
                         <td>@cartItem.Amount</td>
@@ -39,9 +46,74 @@
                                asp-route-productId="@cartItem.Product.Id">-</a>
                         </td>
                     </tr>
+                        number++;
                 }
                 
             </tbody>
         </table>
+        </div>
+
+        <div id="cartCardsView" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" style="display: none;">
+            @foreach (var cartItem in Model.CartItems)
+            {
+                <div class="col">
+                    <div class="card shadow-sm">
+                        <img src="@cartItem.Product.PathPicture">
+                        <div class="card-body">
+                            <h4>@cartItem.Product.Name</h4>
+                            <p class="card-text">@cartItem.Product.Description</p>
+                            <p>Цена: @cartItem.Product.Cost р.</p>
+                            <p>Количество: @cartItem.Amount</p>
+                            <p>Сумма: @cartItem.Cost р.</p>
+                            <div class="btn-group">
+                                <a type="button" class="btn btn-outline-dark"
+                                   asp-controller="Cart"
+                                   asp-action="IncreaseCountProduct"
+                                   asp-route-productId="@cartItem.Product.Id">+</a>
+                                <a type="button" class="btn btn-outline-dark"
+                                   asp-controller="Cart"
+                                   asp-action="DecreaseCountProduct"
+                                   asp-route-productId="@cartItem.Product.Id">-</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
         }
 </div>
+
+        <h4 class="mt-3">Итого: @Model.Cost р.</h4>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        function setCartView(view) {
+            var tableView = document.getElementById('cartTableView');
+            var cardsView = document.getElementById('cartCardsView');
+            var btnTable = document.getElementById('btnTableView');
+            var btnCards = document.getElementById('btnCardsView');
+
+            if (!tableView || !cardsView) {
+                return;
+            }
+
+            if (view === 'cards') {
+                tableView.style.display = 'none';
+                cardsView.style.display = 'flex';
+                btnCards.classList.replace('btn-outline-dark', 'btn-dark');
+                btnTable.classList.replace('btn-dark', 'btn-outline-dark');
+            } else {
+                tableView.style.display = 'block';
+                cardsView.style.display = 'none';
+                btnTable.classList.replace('btn-outline-dark', 'btn-dark');
+                btnCards.classList.replace('btn-dark', 'btn-outline-dark');
+            }
+
+            localStorage.setItem('cartView', view);
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            setCartView(localStorage.getItem('cartView') || 'table');
+        });
+    </script>
+}
