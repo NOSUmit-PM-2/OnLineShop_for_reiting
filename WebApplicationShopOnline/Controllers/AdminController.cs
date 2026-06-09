@@ -12,10 +12,12 @@ namespace WebApplicationShopOnline.Controllers
     public class AdminController : Controller
     {
         readonly IProductDBsRepository productsRepository;
+        ILogger<AdminController> _logger;
 
-        public AdminController(IProductDBsRepository prodRepo)
+        public AdminController(IProductDBsRepository prodRepo, ILogger<AdminController> logger)
         {
             this.productsRepository = prodRepo;
+            _logger = logger;
         }
 
      
@@ -38,10 +40,12 @@ namespace WebApplicationShopOnline.Controllers
             if (ModelState.IsValid)
             {
                 productsRepository.Add(Mapping.ToProductDB(product));
+                _logger.LogInformation("Продукт успешно добавлен");
                 return RedirectToAction("Products", "Admin");
             }
             else 
             {
+                _logger.LogWarning("Данные не прошли проверку");
                 return View(product);
             }
         }
@@ -53,11 +57,21 @@ namespace WebApplicationShopOnline.Controllers
             return View(Mapping.ToProduct(productDB));
         }
 
+
         [HttpPost]
         public IActionResult EditProduct(Product product)
         {
+            if (!ModelState.IsValid)
+            {
+                _logger.LogWarning("Данные не прошли проверку");
+                return View(product);
+            }
+
             productsRepository.Updata(Mapping.ToProductDB(product));
-            return RedirectToAction("Index", "Product", new { product.Id });
+            _logger.LogInformation("Продукт был обновлен");
+            return RedirectToAction("Index", "Product", new { id = product.Id });
         }
+
+
     }
 }
