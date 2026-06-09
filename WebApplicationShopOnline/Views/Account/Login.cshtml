@@ -5,13 +5,13 @@
     <form asp-action="Login" asp-controller="Account">
         <div class="form-group">
             <label asp-for="UserName">Имя пользователя</label>
-            <input asp-for="UserName" class="form-control" placeholder="Enter email">
-            <span asp-validatin-for="UserName" />
+            <input asp-for="UserName" class="form-control" placeholder="Enter email" asp-for="UserName">
+            <span class="text-danger" asp-validation-for="UserName"></span>
         </div>
         <div class="form-group">
             <label asp-for="Password">Пароль</label>
             <input asp-for="Password" class="form-control">
-            <span asp-validatin-for="Password" />
+            <span class="text-danger" asp-validation-for="Password"></span>
         </div>
         <div class="form-check">
             <label class="form-check-label" for="exampleCheck1">Запомни меня</label>
