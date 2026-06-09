@@ -4,76 +4,120 @@
     "Name": "Чебурек",
     "Description": "с сыром",
     "Cost": 120,
-    "PathPicture": "https://thumb.tildacdn.com/tild6339-3863-4763-b866-336338656438/-/resize/536x/-/format/webp/cheb.png"
+    "PathPicture": "https://thumb.tildacdn.com/tild6339-3863-4763-b866-336338656438/-/resize/536x/-/format/webp/cheb.png",
+    "Length": 15,
+    "Width": 10,
+    "Height": 3,
+    "Weight": 0.15
   },
   {
     "Id": 1,
     "Name": "Пирожок",
     "Description": "печеный",
     "Cost": 50,
-    "PathPicture": "https://cdn.foodpicasso.com/assets/2022/05/30/2d5c997edd5a1c47de33aa05a85dc987---png_1000x_103c0_convert.png"
+    "PathPicture": "https://cdn.foodpicasso.com/assets/2022/05/30/2d5c997edd5a1c47de33aa05a85dc987---png_1000x_103c0_convert.png",
+    "Length": 15,
+    "Width": 10,
+    "Height": 3,
+    "Weight": 2
   },
   {
     "Id": 2,
     "Name": "Шаурма",
     "Description": "детская",
     "Cost": 320,
-    "PathPicture": "https://bistromania.ru/wp-content/uploads/2022/02/%D1%88%D0%B0%D1%83%D1%80%D0%BC%D0%B0-%D0%B8-%D1%88%D0%B0%D1%83%D1%80%D0%BC%D0%B0-%D0%BC%D0%B8%D0%BD%D0%B8.jpg"
+    "PathPicture": "https://bistromania.ru/wp-content/uploads/2022/02/%D1%88%D0%B0%D1%83%D1%80%D0%BC%D0%B0-%D0%B8-%D1%88%D0%B0%D1%83%D1%80%D0%BC%D0%B0-%D0%BC%D0%B8%D0%BD%D0%B8.jpg",
+    "Length": 15,
+    "Width": 20,
+    "Height": 3,
+    "Weight": 5
   },
   {
     "Id": 3,
     "Name": "Блинчик",
     "Description": "Тонкий блинчик с начинкой из рубленого мяса и специй.",
     "Cost": 70,
-    "PathPicture": "https://k-expro.ru/wp-content/uploads/2017/06/%D0%91%D0%BB%D0%B8%D0%BD%D1%87%D0%B8%D0%BA-%D0%B1%D0%B5%D0%B7-%D0%BD%D0%B0%D1%87%D0%B8%D0%BD%D0%BA%D0%B8-45%D0%B3%D1%80..jpg"
+    "PathPicture": "https://k-expro.ru/wp-content/uploads/2017/06/%D0%91%D0%BB%D0%B8%D0%BD%D1%87%D0%B8%D0%BA-%D0%B1%D0%B5%D0%B7-%D0%BD%D0%B0%D1%87%D0%B8%D0%BD%D0%BA%D0%B8-45%D0%B3%D1%80..jpg",
+    "Length": 15,
+    "Width": 10,
+    "Height": 3,
+    "Weight": 0.15
   },
   {
     "Id": 4,
     "Name": "Бургер",
     "Description": "Сочный бургер с говяжьей котлетой, плавленым сыром и хрустящим беконом.",
     "Cost": 250,
-    "PathPicture": "https://chefrestoran.ru/wp-content/uploads/2018/10/604655519.jpg"
+    "PathPicture": "https://chefrestoran.ru/wp-content/uploads/2018/10/604655519.jpg",
+    "Length": 15,
+    "Width": 10,
+    "Height": 3,
+    "Weight": 0.15
   },
   {
     "Id": 5,
     "Name": "Пельмени",
     "Description": "Традиционные русские пельмени с мясной начинкой и специями.",
     "Cost": 200,
-    "PathPicture": "https://moretorg55.ru/d/1639260134_16-papik-pro-p-pelmeni-klipart-26.jpg"
+    "PathPicture": "https://moretorg55.ru/d/1639260134_16-papik-pro-p-pelmeni-klipart-26.jpg",
+    "Length": 12,
+    "Width": 8,
+    "Height": 4,
+    "Weight": 0.1
   },
   {
     "Id": 6,
     "Name": "Суп",
     "Description": "Куриный суп с нежным мясом курицы, овощами и ароматными специями.",
     "Cost": 150,
-    "PathPicture": "https://s1.eda.ru/StaticContent/Photos/4/220207112839/p_O.jpg"
+    "PathPicture": "https://s1.eda.ru/StaticContent/Photos/4/220207112839/p_O.jpg",
+    "Length": 12,
+    "Width": 8,
+    "Height": 4,
+    "Weight": 0.1
   },
   {
     "Id": 7,
     "Name": "Пицца",
     "Description": "Классическая пицца Маргарита с томатным соусом и моцареллой.",
     "Cost": 400,
-    "PathPicture": "https://static.pizzasushiwok.ru/images/menu_new/588-1300.jpg"
+    "PathPicture": "https://static.pizzasushiwok.ru/images/menu_new/588-1300.jpg",
+    "Length": 12,
+    "Width": 8,
+    "Height": 4,
+    "Weight": 0.1
   },
   {
     "Id": 8,
     "Name": "Салат",
     "Description": "Легкий салат Цезарь с листьями салата, куриной грудкой и соусом Цезарь.",
     "Cost": 180,
-    "PathPicture": "https://img.freepik.com/premium-photo/summer-green-salad-white-bowl-plate-isolated-white-backgorund-healty-salat-from-tomato-spinach-onion-green-leaves-with-oil-dinner-lunch-vegetarian-food-concept-top-view_335758-59.jpg"
+    "PathPicture": "https://img.freepik.com/premium-photo/summer-green-salad-white-bowl-plate-isolated-white-backgorund-healty-salat-from-tomato-spinach-onion-green-leaves-with-oil-dinner-lunch-vegetarian-food-concept-top-view_335758-59.jpg",
+    "Length": 12,
+    "Width": 8,
+    "Height": 4,
+    "Weight": 2
   },
   {
     "Id": 9,
     "Name": "Мороженое",
     "Description": "Шоколадное мороженое с густым сливочным вкусом и кусочками шоколада.",
     "Cost": 60,
-    "PathPicture": "https://img.freepik.com/premium-photo/ice-cream-with-chocolate-topping-frozen-yogurt-with-chocolate-isolated-white-background-full-depth-field_1040193-1770.jpg"
+    "PathPicture": "https://img.freepik.com/premium-photo/ice-cream-with-chocolate-topping-frozen-yogurt-with-chocolate-isolated-white-background-full-depth-field_1040193-1770.jpg",
+    "Length": 2,
+    "Width": 8,
+    "Height": 4,
+    "Weight": 0.1
   },
   {
     "Id": 10,
     "Name": "Торт",
     "Description": "вкусный, вкусный",
     "Cost": 123,
-    "PathPicture": "https://moretorg55.ru/d/1639260134_16-papik-pro-p-pelmeni-klipart-26.jpg"
+    "PathPicture": "https://moretorg55.ru/d/1639260134_16-papik-pro-p-pelmeni-klipart-26.jpg",
+    "Length": 12,
+    "Width": 8,
+    "Height": 4,
+    "Weight": 4
   }
 ]
