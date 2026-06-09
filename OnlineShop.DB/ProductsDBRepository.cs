@@ -13,11 +13,23 @@ namespace OnlineShop.DB
             this.dbContext = dbContext;
         }
 
-        public List<ProductDB> GetAll()
+        public List<ProductDB> GetAll(string searchText)
         {
-            return dbContext.ProductDBs.ToList();
-        }
+            if (string.IsNullOrEmpty(searchText))
+            {
+                return dbContext.ProductDBs.ToList();
+            }
 
+            var result = new List<ProductDB>();
+            foreach (var product in dbContext.ProductDBs)
+            {
+                if (product.Description.Contains(searchText))
+                {
+                    result.Add(product);
+                }
+            }
+            return result;
+        }
         public ProductDB TryGetById(Guid id)
         {
             return dbContext.ProductDBs.FirstOrDefault(x => x.Id == id);
