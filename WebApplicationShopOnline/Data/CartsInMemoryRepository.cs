@@ -7,8 +7,8 @@ namespace WebApplicationShopOnline.Data
         List<Cart> Carts = new List<Cart>();
 
         CartItem AddItem(Product product)
-        { 
-            CartItem item = new CartItem(); 
+        {
+            CartItem item = new CartItem();
             item.Id = Guid.NewGuid();
             item.Product = product;
             item.Amount = 1;
@@ -35,7 +35,7 @@ namespace WebApplicationShopOnline.Data
                 {
                     currentCart.CartItems.Add(AddItem(product));
                 }
-                else 
+                else
                 {
                     currentCartItem.Amount += 1;
                 }

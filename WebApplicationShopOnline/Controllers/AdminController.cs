@@ -1,9 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Hosting;
 using OnlineShop.DB;
-using System.Diagnostics;
-using System.Xml.Linq;
-using WebApplicationShopOnline.Data;
 using WebApplicationShopOnline.Helpers;
 using WebApplicationShopOnline.Models;
 
@@ -18,15 +14,13 @@ namespace WebApplicationShopOnline.Controllers
             this.productsRepository = prodRepo;
         }
 
-     
-        public IActionResult Products(int id)
+        public IActionResult Products()
         {
             return View(Mapping.ToProductsList(productsRepository.GetAll()));
         }
 
-
         [HttpGet]
-        public IActionResult AddProduct() 
+        public IActionResult AddProduct()
         {
             return View();
         }
@@ -34,13 +28,12 @@ namespace WebApplicationShopOnline.Controllers
         [HttpPost]
         public IActionResult AddProduct(Product product)
         {
-        
             if (ModelState.IsValid)
             {
                 productsRepository.Add(Mapping.ToProductDB(product));
                 return RedirectToAction("Products", "Admin");
             }
-            else 
+            else
             {
                 return View(product);
             }

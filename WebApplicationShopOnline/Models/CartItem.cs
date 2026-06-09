@@ -5,9 +5,9 @@
         public Guid Id { get; set; }
         public Product Product { get; set; }
         public int Amount { get; set; }
-        public decimal Cost 
+        public decimal Cost
         {
-            get { return Product.Cost * Amount; } 
+            get { return Product.Cost * Amount; }
         }
     }
 }

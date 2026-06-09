@@ -4,8 +4,6 @@ namespace WebApplicationShopOnline.Models
 {
     public class Product
     {
-        static int instanceCounter = 0;
-
         public Guid Id { get; set; }
 
         [Required(ErrorMessage = "Не указано название продукта")]

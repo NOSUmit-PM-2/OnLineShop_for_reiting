@@ -3,7 +3,7 @@
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
     <div class="col">
         <div class="card shadow-sm">
-            <img src="@Model.PathPicture">
+            <img src="@Model.PathPicture" class="card-img-top" alt="@Model.Name">
 
             <div class="card-body">
                 <h4>@Model.Name</h4>
@@ -13,8 +13,7 @@
                         <a type="button" class="btn btn-primary"
                            asp-controller="Admin"
                            asp-action="EditProduct"
-                           asp-route-id="@Model.Id"
-                        >Редактировать</a>
+                           asp-route-id="@Model.Id">Редактировать</a>
                     </div>
                     <small class="text-muted">@Model.Cost р.</small>
                 </div>
@@ -22,4 +21,3 @@
         </div>
     </div>
 </div>
-

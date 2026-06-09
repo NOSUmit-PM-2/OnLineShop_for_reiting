@@ -1,11 +1,13 @@
-﻿
+using OnlineShop.DB.Models;
+using System.Collections.Generic;
+
 namespace OnlineShop.DB
 {
     public interface ICartDBsRepository
     {
-        CartDB TryGetByUserId(int id);
-        void Add(ProductDB product, int userId);
-        void IncreaseCountProduct(Guid productId, int userId);
-        void DecreaseCountProduct(Guid productId, int userId);
+        List<Cart> GetUserCart(string userId);
+        void AddToCart(string userId, int productId, int quantity);
+        void RemoveFromCart(int cartId);
+        void ClearCart(string userId);
     }
 }

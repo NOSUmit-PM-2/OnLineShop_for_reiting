@@ -1,4 +1,4 @@
-﻿@model Login
+﻿@model WebApplicationShopOnline.Models.Login
 
 <div class="text-left">
     <h1 class="display-4">Вход в систему</h1>
@@ -6,19 +6,15 @@
         <div class="form-group">
             <label asp-for="UserName">Имя пользователя</label>
             <input asp-for="UserName" class="form-control" placeholder="Enter email">
-            <span asp-validatin-for="UserName" />
         </div>
         <div class="form-group">
             <label asp-for="Password">Пароль</label>
             <input asp-for="Password" class="form-control">
-            <span asp-validatin-for="Password" />
         </div>
         <div class="form-check">
-            <label class="form-check-label" for="exampleCheck1">Запомни меня</label>
+            <label class="form-check-label">Запомни меня</label>
             <input type="checkbox" class="form-check-input" name="RememberMe">
-            
         </div>
         <button type="submit" class="btn btn-primary">Войти</button>
     </form>
-
 </div>

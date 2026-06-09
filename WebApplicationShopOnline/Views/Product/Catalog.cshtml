@@ -1,40 +1,79 @@
-﻿@model List<Product>
+﻿@model List<WebApplicationShopOnline.Models.Product>
+
+    @{
+    string currentSearchString = ViewBag.SearchString as string;
+    }
 
     <h2>Каталог</h2>
 
-<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+    <div class="row mb-4">
+        <div class="col-md-5">
+            <form asp-action="Catalog" asp-controller="Product" method="get" class="row g-2 align-items-center">
+                <div class="col-auto">
+                    <label for="searchString" class="col-form-label">Поиск по описанию:</label>
+                </div>
+                <div class="col-auto">
+                    <input type="text"
+                           name="searchString"
+                           id="searchString"
+                           class="form-control"
+                           placeholder="Введите текст для поиска"
+                           value="@currentSearchString"
+                           style="width: 250px;">
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary">Поиск</button>
+                </div>
+                <div class="col-auto">
+                    <a asp-action="Catalog" class="btn btn-secondary">Сбросить</a>
+                </div>
+            </form>
+        </div>
+    </div>
 
-    @foreach(var product in Model)
-    {
+    @if (Model.Count == 0)
+{
+    <div class="alert alert-info" role="alert">
+        @if (!string.IsNullOrEmpty(currentSearchString))
+        {
+        <span>Нет товаров с описанием, содержащим "@currentSearchString"</span>
+        }
+        else
+        {
+        <span>В каталоге пока нет товаров.</span>
+        }
+    </div>
+}
+else
+{
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        @foreach (var product in Model)
+        {
         <div class="col">
             <div class="card shadow-sm">
-                    <img src="@product.PathPicture">
+                <img src="@product.PathPicture" class="card-img-top" alt="@product.Name" style="height: 200px; object-fit: cover;">
 
                 <div class="card-body">
-                        <h4>@product.Name</h4>
-                        <p>@product.Id</p>
-                        <p class="card-text">@product.Description</p>
+                    <h4>@product.Name</h4>
+                    <p class="card-text">@product.Description</p>
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="btn-group">
                             <a class="btn btn-primary"
-                               asp-area=""
                                asp-controller="Product"
-                               asp-action="Index" 
+                               asp-action="Index"
                                asp-route-id="@product.Id"
                                role="button">Подробнее</a>
                             <a class="btn btn-primary"
-                               asp-area=""
                                asp-controller="Cart"
                                asp-action="Add"
                                asp-route-id="@product.Id"
                                role="button">В корзину</a>
-                         
                         </div>
-                            <small class="text-muted">@product.Cost р.</small>
+                        <small class="text-muted">@product.Cost р.</small>
                     </div>
                 </div>
             </div>
         </div>
-    }
-</div>
-
+        }
+    </div>
+}

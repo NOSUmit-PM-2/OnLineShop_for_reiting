@@ -1,23 +1,20 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualBasic;
-using OnlineShop.DB.Models;
-using System.Diagnostics;
-using WebApplicationShopOnline.Models;
 using OnlineShop.DB;
+using OnlineShop.DB.Models;
+using WebApplicationShopOnline.Models;
 
 namespace WebApplicationShopOnline.Controllers
 {
     public class AccountController : Controller
     {
-        //private readonly IUserManager usersManager;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
 
-        public AccountController(SignInManager<User> signInManager, UserManager<User> _userManager)
+        public AccountController(SignInManager<User> signInManager, UserManager<User> userManager)
         {
             _signInManager = signInManager;
-            this._userManager = _userManager;
+            _userManager = userManager;
         }
 
         [HttpPost]
@@ -35,7 +32,6 @@ namespace WebApplicationShopOnline.Controllers
             return View(login);
         }
 
-   
         public IActionResult Login()
         {
             return View();
@@ -55,7 +51,7 @@ namespace WebApplicationShopOnline.Controllers
                 var result = _userManager.CreateAsync(user, reg.Password).Result;
                 if (result.Succeeded)
                 {
-                    _userManager.AddToRoleAsync(user, OnlineShop.DB.Constants.UserRoleName).Wait();
+                    _userManager.AddToRoleAsync(user, Constants.UserRoleName).Wait();
                     _signInManager.SignInAsync(user, false).Wait();
                     return RedirectToAction("Catalog", "Product");
                 }
@@ -65,9 +61,8 @@ namespace WebApplicationShopOnline.Controllers
 
         public IActionResult Logout()
         {
-            _signInManager.SignOutAsync().Wait();   
+            _signInManager.SignOutAsync().Wait();
             return RedirectToAction("Catalog", "Product");
         }
-
     }
 }

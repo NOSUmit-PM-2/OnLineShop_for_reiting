@@ -1,90 +1,63 @@
-﻿
-using Microsoft.EntityFrameworkCore;
+using OnlineShop.DB.Models;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace OnlineShop.DB
 {
     public class CartDBsRepository : ICartDBsRepository
     {
-        readonly DatabaseContext databaseContext;
+        private readonly DatabaseContext _databaseContext;
 
         public CartDBsRepository(DatabaseContext databaseContext)
         {
-            this.databaseContext = databaseContext;
+            _databaseContext = databaseContext;
         }
 
-        public void Add(ProductDB product, int userId)
+        public List<Cart> GetUserCart(string userId)
         {
-            var currentCart = TryGetByUserId(userId);
+            return _databaseContext.Carts
+                .Where(c => c.UserId == userId)
+                .ToList();
+        }
 
-            if (currentCart == null)
+        public void AddToCart(string userId, int productId, int quantity)
+        {
+            var existingItem = _databaseContext.Carts
+                .FirstOrDefault(c => c.UserId == userId && c.ProductId == productId);
+
+            if (existingItem != null)
             {
-                var newCart = new CartDB();
-                newCart.Id = Guid.NewGuid();
-                newCart.UserId = userId;
-                newCart.CartItems = new List<CartItemDB>();
-                newCart.CartItems.Add(AddItem(product));
-                databaseContext.CartDBs.Add(newCart);
+                existingItem.Quantity += quantity;
             }
             else
             {
-                var currentCartItem = currentCart.CartItems.FirstOrDefault(x => x.Product.Id == product.Id);
-                if (currentCartItem == null)
+                var cartItem = new Cart
                 {
-                    currentCart.CartItems.Add(AddItem(product));
-                }
-                else
-                {
-                    currentCartItem.Amount += 1;
-                }
+                    UserId = userId,
+                    ProductId = productId,
+                    Quantity = quantity,
+                    CreatedAt = DateTime.Now
+                };
+                _databaseContext.Carts.Add(cartItem);
             }
-            databaseContext.SaveChangesAsync();
-
+            _databaseContext.SaveChanges();
         }
 
-
-        public void DecreaseCountProduct(Guid productId, int userId)
+        public void RemoveFromCart(int cartId)
         {
-            var currentCart = TryGetByUserId(userId);
-            var currentCartItem = currentCart.CartItems.FirstOrDefault(x => x.Product.Id == productId);
-            if (currentCartItem != null)
+            var cartItem = _databaseContext.Carts.FirstOrDefault(c => c.Id == cartId);
+            if (cartItem != null)
             {
-                currentCartItem.Amount -= 1;
-                if (currentCartItem.Amount == 0)
-                {
-                    currentCart.CartItems.Remove(currentCartItem);
-                }
+                _databaseContext.Carts.Remove(cartItem);
+                _databaseContext.SaveChanges();
             }
-            databaseContext.SaveChangesAsync();
         }
 
-        public void IncreaseCountProduct(Guid productId, int userId)
+        public void ClearCart(string userId)
         {
-            var currentCart = TryGetByUserId(userId);
-            var currentCartItem = currentCart.CartItems.FirstOrDefault(x => x.Product.Id == productId);
-            if (currentCartItem != null)
-            {
-                currentCartItem.Amount += 1;
-            }
-            databaseContext.SaveChangesAsync();
-        }
-
-        public CartDB TryGetByUserId(int id)
-        {
-
-            return databaseContext.CartDBs.
-                Include(cart => cart.CartItems)
-                .ThenInclude(item => item.Product)
-                .FirstOrDefault(cart => cart.UserId == id);
-            // return databaseContext.CartDBs.FirstOrDefault(cart => cart.UserId == id);
-        }
-
-        CartItemDB AddItem(ProductDB product)
-        {
-            CartItemDB item = new CartItemDB();
-            item.Id = Guid.NewGuid();
-            item.Product = product;
-            item.Amount = 1;
-            return item;
+            var userCart = GetUserCart(userId);
+            _databaseContext.Carts.RemoveRange(userCart);
+            _databaseContext.SaveChanges();
         }
     }
 }

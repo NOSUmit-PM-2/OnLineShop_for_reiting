@@ -1,46 +1,55 @@
-﻿using System.Linq;
-using System.Text.Encodings.Web;
-using System.Text.Json;
+using OnlineShop.DB.Models;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace OnlineShop.DB
 {
-    public class ProductsDBRepository : IProductDBsRepository
-    {
-        private readonly DatabaseContext dbContext;
+	public class ProductsDBRepository : IProductDBsRepository
+	{
+		private readonly DatabaseContext _databaseContext;
 
-        public ProductsDBRepository(DatabaseContext dbContext)
-        {
-            this.dbContext = dbContext;
-        }
+		public ProductsDBRepository(DatabaseContext databaseContext)
+		{
+			_databaseContext = databaseContext;
+		}
 
-        public List<ProductDB> GetAll()
-        {
-            return dbContext.ProductDBs.ToList();
-        }
+		public List<Product> GetAllProducts()
+		{
+			return _databaseContext.Products.ToList();
+		}
 
-        public ProductDB TryGetById(Guid id)
-        {
-            return dbContext.ProductDBs.FirstOrDefault(x => x.Id == id);
-        }
+		public Product GetProductById(int id)
+		{
+			return _databaseContext.Products.FirstOrDefault(p => p.Id == id);
+		}
 
-        public void Add(ProductDB product)
-        {
-            dbContext.ProductDBs.Add(product);
-            dbContext.SaveChanges();
-        }
+		public void AddProduct(Product product)
+		{
+			_databaseContext.Products.Add(product);
+			_databaseContext.SaveChanges();
+		}
 
-        public void Updata(ProductDB product)
-        {
-            var existingProduct = dbContext.ProductDBs.FirstOrDefault(x => x.Id == product.Id);
-            if (existingProduct == null)
-            {
-                return;
-            }
-            existingProduct.Name = product.Name;
-            existingProduct.Description = product.Description;
-            existingProduct.Cost = product.Cost;
-            existingProduct.PathPicture = product.PathPicture;
-            dbContext.SaveChanges();
-        }
-    }
+		public void UpdateProduct(Product product)
+		{
+			var existingProduct = GetProductById(product.Id);
+			if (existingProduct != null)
+			{
+				existingProduct.Name = product.Name;
+				existingProduct.Description = product.Description;
+				existingProduct.Price = product.Price;
+				existingProduct.Category = product.Category;
+				_databaseContext.SaveChanges();
+			}
+		}
+
+		public void DeleteProduct(int id)
+		{
+			var product = GetProductById(id);
+			if (product != null)
+			{
+				_databaseContext.Products.Remove(product);
+				_databaseContext.SaveChanges();
+			}
+		}
+	}
 }
