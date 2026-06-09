@@ -13,11 +13,13 @@ namespace WebApplicationShopOnline.Controllers
     {
         readonly IProductDBsRepository productsRepository;
         readonly ICartDBsRepository cartsRepository;
+        readonly IOrderDBsRepository ordersRepository;
 
-        public CartController(IProductDBsRepository prodRepo, ICartDBsRepository cartsRepository)
+        public CartController(IProductDBsRepository prodRepo, ICartDBsRepository cartsRepository, IOrderDBsRepository ordersRepository)
         {
             this.productsRepository = prodRepo;
             this.cartsRepository = cartsRepository;
+            this.ordersRepository = ordersRepository;
         }
 
         public IActionResult Index(int id)
@@ -42,6 +44,12 @@ namespace WebApplicationShopOnline.Controllers
         public IActionResult DecreaseCountProduct(Guid productId)
         {
             cartsRepository.DecreaseCountProduct(productId, 1);
+            return RedirectToAction("Index");
+        }
+        public IActionResult SaveCart(Cart cart, string address)
+        {
+            ordersRepository.Add(Mapping.ToCartDB(cart), address);
+            Console.WriteLine(address);
             return RedirectToAction("Index");
         }
     }

@@ -52,15 +52,17 @@
                 <button class="close-modal" id="closeModalBtn" aria-label="Закрыть" onclick="closeModal()">&times;</button>
             </div>
             <div class="modal-body">
-                <div class="input-group">
-                    <label for="deliveryAddress">Введите адрес или пункт выдачи</label>
-                    <input type="text" id="deliveryAddress" class="delivery-input" placeholder="Например: ул. Пушкина, 12, кв. 45" autocomplete="off">
-                    <div class="input-hint">🏠 Точный адрес поможет курьеру быстрее доставить заказ</div>
-                </div>
-                <div class="modal-actions">
-                    <button class="btn btn-secondary" id="cancelModalBtn" onclick="closeModal()">Отмена</button>
-                    <button class="btn btn-primary" id="saveAddressBtn">Сохранить</button>
-                </div>
+                <form methpd="Post" asp-controller="Cart" asp-action="SaveCart" asp-route-cart="@Model">
+                    <div class="input-group">
+                        <label for="deliveryAddress">Введите адрес или пункт выдачи</label>
+                        <input name ="address" type="text" id="deliveryAddress" class="delivery-input" placeholder="Например: ул. Пушкина, 12, кв. 45" autocomplete="off">
+                        <div class="input-hint">🏠 Точный адрес поможет курьеру быстрее доставить заказ</div>
+                    </div>
+                    <div class="modal-actions">
+                        <button class="btn btn-secondary" id="cancelModalBtn" onclick="closeModal()">Отмена</button>
+                        <a type="submit" class="btn btn-primary" id="saveAddressBtn"  onclick="closeModal()">Сохранить</a>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
