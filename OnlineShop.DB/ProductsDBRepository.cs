@@ -42,5 +42,16 @@ namespace OnlineShop.DB
             existingProduct.PathPicture = product.PathPicture;
             dbContext.SaveChanges();
         }
+
+        public List<ProductDB> GetByName(string searchString)
+        {
+
+            if (string.IsNullOrEmpty(searchString))
+                return dbContext.ProductDBs.ToList();
+
+            return dbContext.ProductDBs
+                .Where(p => p.Name.ToLower().Contains(searchString.ToLower()))
+                .ToList();
+        }
     }
 }
