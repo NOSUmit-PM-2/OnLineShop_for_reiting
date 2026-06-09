@@ -34,6 +34,12 @@ namespace WebApplicationShopOnline.Controllers
 
         public IActionResult Sort(int min, int max)
         {
+            if (min > max)
+            {
+                int x = min;
+                min = max;
+                max = x;
+            }
 
             List<ProductDB> prod = productsRepository.TryGetByPrice(min, max);
             return View("Catalog", Mapping.ToProductsList(prod));
