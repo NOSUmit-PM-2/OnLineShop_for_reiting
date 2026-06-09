@@ -3,45 +3,44 @@
 <div class="text-left">
     <h1 class="display-4">Корзина</h1>
     @if (Model == null || Model.CartItems.Count == 0)
-        {
-            <h3>У вас еще нет покупок</h3>
-        }
+    {
+    <h3>У вас еще нет покупок</h3>
+    }
     else
-        {
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Название</th>
-                    <th scope="col">Цена</th>
-                    <th scope="col">Количество</th>
-                    <th scope="col">Сумма</th>
-                    <th scope="col">+/-</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var cartItem in Model.CartItems)
+    {
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Название</th>
+                <th scope="col">Цена</th>
+                <th scope="col">Количество</th>
+                <th scope="col">Сумма</th>
+                <th scope="col">+/-</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var cartItem in Model.CartItems)
                 {
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>@cartItem.Product.Name</td>
-                        <td>@cartItem.Product.Cost</td>
-                        <td>@cartItem.Amount</td>
-                        <td>@cartItem.Cost</td>
-                        <td>
-                            <a type="button" class="btn btn-outline-dark"
-                                asp-controller="Cart"
-                                asp-action="IncreaseCountProduct"
-                                asp-route-productId="@cartItem.Product.Id">+</a>
-                            <a type="button" class="btn btn-outline-dark"
-                               asp-controller="Cart"
-                               asp-action="DecreaseCountProduct"
-                               asp-route-productId="@cartItem.Product.Id">-</a>
-                        </td>
-                    </tr>
+            <tr>
+                <th scope="row">1</th>
+                <td>@cartItem.Product.Name</td>
+                <td>@cartItem.Product.Cost</td>
+                <td>@cartItem.Amount</td>
+                <td>@cartItem.Cost</td>
+                <td>
+                    <a type="button" class="btn btn-outline-dark"
+                       asp-controller="Cart"
+                       asp-action="IncreaseCountProduct"
+                       asp-route-productId="@cartItem.Product.Id">+</a>
+                    <a type="button" class="btn btn-outline-dark"
+                       asp-controller="Cart"
+                       asp-action="DecreaseCountProduct"
+                       asp-route-productId="@cartItem.Product.Id">-</a>
+                </td>
+            </tr>
                 }
-                
-            </tbody>
-        </table>
-        }
+        </tbody>
+    </table>
+    }
 </div>

@@ -1,7 +1,6 @@
-﻿using System.Linq;
-using WebApplicationShopOnline.Models;
+﻿using System.Text.Encodings.Web;
 using System.Text.Json;
-using System.Text.Encodings.Web;
+using WebApplicationShopOnline.Models;
 
 namespace WebApplicationShopOnline.Data
 {
@@ -13,7 +12,6 @@ namespace WebApplicationShopOnline.Data
         {
             var jsonString = File.ReadAllText("Data/products.json");
             products = JsonSerializer.Deserialize<List<Product>>(jsonString);
-
         }
 
         public void Add(Product product)
@@ -51,7 +49,7 @@ namespace WebApplicationShopOnline.Data
             string updatedJsonString = JsonSerializer.Serialize(products,
             new JsonSerializerOptions
             {
-                WriteIndented = true, // человекочитаемый формат
+                WriteIndented = true,
                 Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
             });
             File.WriteAllText("Data/products.json", updatedJsonString, System.Text.Encoding.UTF8);

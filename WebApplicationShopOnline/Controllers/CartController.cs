@@ -1,9 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Hosting;
 using OnlineShop.DB;
-using System.Diagnostics;
-using System.Xml.Linq;
-using WebApplicationShopOnline.Data;
 using WebApplicationShopOnline.Helpers;
 using WebApplicationShopOnline.Models;
 
@@ -20,7 +16,7 @@ namespace WebApplicationShopOnline.Controllers
             this.cartsRepository = cartsRepository;
         }
 
-        public IActionResult Index(int id)
+        public IActionResult Index()
         {
             Cart cart = Mapping.ToCart(cartsRepository.TryGetByUserId(1));
             return View(cart);

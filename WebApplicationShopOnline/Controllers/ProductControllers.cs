@@ -1,9 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Hosting;
 using OnlineShop.DB;
-using System.Diagnostics;
-using System.Xml.Linq;
-using WebApplicationShopOnline.Data;
 using WebApplicationShopOnline.Helpers;
 using WebApplicationShopOnline.Models;
 
@@ -15,7 +11,7 @@ namespace WebApplicationShopOnline.Controllers
 
         public ProductController(IProductDBsRepository prodRepo)
         {
-            this.productsRepository = prodRepo;
+            productsRepository = prodRepo;
         }
 
         public IActionResult Index(Guid id)
@@ -29,7 +25,6 @@ namespace WebApplicationShopOnline.Controllers
             List<ProductDB> products = productsRepository.GetAll();
             List<Product> productViewModels = Mapping.ToProductsList(products);
 
-            // Фильтрация по подстроке в описании, если указан поисковый запрос
             if (!string.IsNullOrEmpty(searchString))
             {
                 productViewModels = productViewModels
@@ -38,9 +33,7 @@ namespace WebApplicationShopOnline.Controllers
                     .ToList();
             }
 
-            // Передаем значение searchString в представление для отображения в поле поиска
             ViewBag.SearchString = searchString;
-
             return View(productViewModels);
         }
     }

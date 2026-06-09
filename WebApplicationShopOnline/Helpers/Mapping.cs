@@ -7,6 +7,7 @@ namespace WebApplicationShopOnline.Helpers
     {
         public static Product ToProduct(ProductDB product)
         {
+            if (product == null) return null;
             return new Product
             {
                 Id = product.Id,
@@ -19,6 +20,7 @@ namespace WebApplicationShopOnline.Helpers
 
         public static ProductDB ToProductDB(Product product)
         {
+            if (product == null) return null;
             return new ProductDB
             {
                 Id = product.Id,
@@ -31,6 +33,7 @@ namespace WebApplicationShopOnline.Helpers
 
         public static List<Product> ToProductsList(List<ProductDB> productDBs)
         {
+            if (productDBs == null) return new List<Product>();
             List<Product> products = new List<Product>();
             foreach (var product in productDBs)
                 products.Add(ToProduct(product));
@@ -39,6 +42,7 @@ namespace WebApplicationShopOnline.Helpers
 
         public static List<ProductDB> ToProductDBsList(List<Product> products)
         {
+            if (products == null) return new List<ProductDB>();
             List<ProductDB> productDBs = new List<ProductDB>();
             foreach (var product in products)
                 productDBs.Add(ToProductDB(product));
@@ -47,6 +51,7 @@ namespace WebApplicationShopOnline.Helpers
 
         public static CartDB ToCartDB(Cart cart)
         {
+            if (cart == null) return null;
             return new CartDB
             {
                 Id = cart.Id,
@@ -57,6 +62,7 @@ namespace WebApplicationShopOnline.Helpers
 
         private static CartItemDB ToCartItemDB(CartItem item)
         {
+            if (item == null) return null;
             return new CartItemDB
             {
                 Id = item.Id,
@@ -67,6 +73,7 @@ namespace WebApplicationShopOnline.Helpers
 
         public static Cart ToCart(CartDB cart)
         {
+            if (cart == null) return null;
             return new Cart
             {
                 Id = cart.Id,
@@ -77,6 +84,7 @@ namespace WebApplicationShopOnline.Helpers
 
         private static CartItem ToCartItem(CartItemDB item)
         {
+            if (item == null) return null;
             return new CartItem
             {
                 Id = item.Id,

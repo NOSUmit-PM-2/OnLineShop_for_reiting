@@ -1,19 +1,10 @@
-﻿using System.Linq;
-using System.Text.Encodings.Web;
-using System.Text.Json;
-using WebApplicationShopOnline.Models;
+﻿using WebApplicationShopOnline.Models;
 
 namespace WebApplicationShopOnline.Data
 {
     public class ProductsInMemoryRepository : IProductsRepository
     {
         static List<Product> products = new List<Product>();
-        //{
-        //    new Product("Чебурек", "с сыром", 120, "https://swlife.ru/image/cache/catalog/product/02/55/02550518f7517f25a9a7f5da33644fd6-0x0.webp"),
-        //    new Product("Пирожок", "с ливером", 50, "https://slastenabakery.ru/image/cache/catalog/tovar/pirozhok-kuritsa-652x495.jpg"),
-        //    new Product("Шаурма", "классическая", 400, "/images/saurma.jpg"),
-        //    new Product("Шаурма", "детская", 340, "/images/saurma.jpg")
-        //};
 
         public List<Product> GetAll()
         {
@@ -42,8 +33,5 @@ namespace WebApplicationShopOnline.Data
             existingProduct.Cost = product.Cost;
             existingProduct.PathPicture = product.PathPicture;
         }
-
-        
-
     }
 }
