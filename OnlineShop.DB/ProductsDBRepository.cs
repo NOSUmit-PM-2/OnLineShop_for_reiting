@@ -42,5 +42,10 @@ namespace OnlineShop.DB
             existingProduct.PathPicture = product.PathPicture;
             dbContext.SaveChanges();
         }
+
+        public List<ProductDB>? GetByCategory(ProductCategory category)
+        {
+            return dbContext?.ProductDBs?.Where(x => x.Category == category).ToList();
+        }
     }
 }
