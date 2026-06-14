@@ -21,18 +21,18 @@ namespace WebApplicationShopOnline.Controllers
         }
 
         public IActionResult Index(int id)
+            
         {
-            if (cartsRepository.TryGetByUserId(1) != null)
-            {
-                Cart cart = Mapping.ToCart(cartsRepository.TryGetByUserId(1));
-            }
-            return View();
+            var cartDb = cartsRepository.TryGetByUserId(1);
+            var cart = cartDb != null ? Mapping.ToCart(cartDb) : null;
+            return View(cart);
         }
 
         public IActionResult Add(Guid id)
         {
             ProductDB product = productsRepository.TryGetById(id);
             cartsRepository.Add(product, 1);
+
             return RedirectToAction("Index");
         }
 
