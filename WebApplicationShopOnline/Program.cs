@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using OnlineShop.DB;
 using OnlineShop.DB.Models;
+using OnlineShopp.DB;
 using WebApplicationShopOnline.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,12 +22,19 @@ builder.Services.AddTransient<ICartDBsRepository, CartDBsRepository>();
 var app = builder.Build();
 
 
-// Вызов инициализации БД 
+// Вызов инициализации БД с пользователями
 using (var scope = app.Services.CreateScope())
 {
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
     IdentityInitializer.Initialize(userManager, roleManager);
+}
+
+//Инициализпция DB с товарами
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
+    DbInitializer.Initialize(dbContext);
 }
 
 // Configure the HTTP request pipeline.
