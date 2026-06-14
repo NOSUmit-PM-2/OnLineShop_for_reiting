@@ -14,9 +14,9 @@ builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(c
 
 builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<DatabaseContext>();
 
-builder.Services.AddTransient<IProductDBsRepository, ProductsDBRepository>();
+builder.Services.AddScoped<IProductDBsRepository, ProductsDBRepository>();
 
-builder.Services.AddTransient<ICartDBsRepository, CartDBsRepository>();
+builder.Services.AddScoped<ICartDBsRepository, CartDBsRepository>();
 
 
 var app = builder.Build();

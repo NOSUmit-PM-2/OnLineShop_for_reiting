@@ -8,5 +8,17 @@ namespace OnlineShop.DB
         public ProductDB Product { get; set; }
         public int Amount { get; set; }
         public CartDB Cart { get; set; }
+
+        public CartItemDB()
+        {
+            //Id = Guid.NewGuid();
+        }
+
+        public CartItemDB(ProductDB product, CartDB cart):this()
+        {
+            Product = product;
+            Cart = cart;
+            Amount = 1;
+        }
     }
 }

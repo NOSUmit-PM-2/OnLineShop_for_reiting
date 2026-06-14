@@ -14,31 +14,34 @@ namespace OnlineShop.DB
 
         public void Add(ProductDB product, int userId)
         {
-            var currentCart = TryGetByUserId(userId);
+            var existingCart = TryGetByUserId(userId);
 
-            if (currentCart == null)
+            if (existingCart == null)
             {
-                var newCart = new CartDB();
-                newCart.Id = Guid.NewGuid();
-                newCart.UserId = userId;
-                newCart.CartItems = new List<CartItemDB>();
-                newCart.CartItems.Add(AddItem(product));
-                databaseContext.CartDBs.Add(newCart);
+                var cartItems = new List<CartItemDB>();
+                existingCart = new CartDB()
+                {
+                    UserId = userId,
+                    CartItems = cartItems
+                };
+                cartItems.Add(new CartItemDB(product, existingCart));
+                databaseContext.CartDBs.Add(existingCart);
             }
             else
             {
-                var currentCartItem = currentCart.CartItems.FirstOrDefault(x => x.Product.Id == product.Id);
-                if (currentCartItem == null)
+                var existingCartItem = existingCart.CartItems
+                    .FirstOrDefault(item => item.Product.Id == product.Id);
+
+                if (existingCartItem == null)
                 {
-                    currentCart.CartItems.Add(AddItem(product));
+                    existingCart.CartItems.Add(new CartItemDB(product, existingCart));
                 }
                 else
                 {
-                    currentCartItem.Amount += 1;
+                    existingCartItem.Amount++;
                 }
             }
-            databaseContext.SaveChangesAsync();
-
+            databaseContext.SaveChanges();
         }
 
 

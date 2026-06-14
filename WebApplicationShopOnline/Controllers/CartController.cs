@@ -32,7 +32,6 @@ namespace WebApplicationShopOnline.Controllers
         {
             ProductDB product = productsRepository.TryGetById(id);
             cartsRepository.Add(product, 1);
-
             return RedirectToAction("Index");
         }
 
