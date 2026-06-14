@@ -25,9 +25,9 @@ namespace WebApplicationShopOnline.Controllers
         }
 
 
-        public IActionResult Catalog() 
+        public IActionResult Catalog()
         {
-            List<ProductDB>products = productsRepository.GetAll();
+            List<ProductDB> products = productsRepository.GetAll();
             //return View("CatalogSimple", products);
             return View(Mapping.ToProductsList(products));
         }

@@ -1,13 +1,12 @@
 ﻿@model List<Product>
 
-    <h2>Каталог простой</h2>
+<h2>Каталог простой</h2>
 
-        @foreach (var product in Model)
-        {
-            <h4> @product.Name</h4>
-            <p> @product.Id</p>
-            <p> @product.Description</p>
-            <p> @product.Cost р.</p>
-        }
+@foreach (var product in Model)
+{
+    <h4> @product.Name</h4>
+    <p> @product.Id</p>
+    <p> @product.Description</p>
+    <p> @product.Cost р.</p>
+}
 </div>
-
