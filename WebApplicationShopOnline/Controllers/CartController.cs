@@ -20,10 +20,11 @@ namespace WebApplicationShopOnline.Controllers
             this.cartsRepository = cartsRepository;
         }
 
-        public IActionResult Index(int id)
+        public IActionResult Index(string viewType = "table")
         {
             CartDB cartDb = cartsRepository.TryGetByUserId(1);
             Cart cart = cartDb == null ? null : Mapping.ToCart(cartDb);
+            ViewBag.ViewType = viewType;
             return View(cart);
         }
 
