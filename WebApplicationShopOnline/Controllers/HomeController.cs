@@ -11,6 +11,7 @@ namespace WebApplicationShopOnline.Controllers
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
+            
         }
 
         public IActionResult Index()

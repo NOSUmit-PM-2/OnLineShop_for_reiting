@@ -16,6 +16,10 @@ namespace WebApplicationShopOnline.Controllers
         public ProductController(IProductDBsRepository prodRepo)
         {
             this.productsRepository = prodRepo;
+            if (productsRepository.GetAll().Count == 0)
+            {
+                productsRepository.Add(new ProductDB { Id = new Guid(), Cost = 1500, Description = "smth", Name = "Freezer", PathPicture = "" });
+            }
         }
 
         public IActionResult Index(Guid id)
