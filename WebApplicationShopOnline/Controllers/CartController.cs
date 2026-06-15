@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
 using OnlineShop.DB;
+using OnlineShop.DB.Models;
 using System.Diagnostics;
 using System.Xml.Linq;
 using WebApplicationShopOnline.Data;
 using WebApplicationShopOnline.Helpers;
 using WebApplicationShopOnline.Models;
-
 namespace WebApplicationShopOnline.Controllers
 {
     public class CartController : Controller

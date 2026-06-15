@@ -47,11 +47,17 @@ namespace WebApplicationShopOnline.Helpers
 
         public static CartDB ToCartDB(Cart cart)
         {
+            if (cart == null)
+            {
+                throw new ArgumentNullException(nameof(cart), "Корзина не может быть null");
+            }
+
             return new CartDB
             {
                 Id = cart.Id,
                 UserId = cart.UserId,
-                CartItems = cart.CartItems?.Select(item => ToCartItemDB(item)).ToList()
+                // Если CartItems == null, создаём пустой список
+                CartItems = cart.CartItems?.Select(item => ToCartItemDB(item)).ToList() ?? new List<CartItemDB>()
             };
         }
 

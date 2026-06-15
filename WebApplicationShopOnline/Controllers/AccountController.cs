@@ -10,7 +10,6 @@ namespace WebApplicationShopOnline.Controllers
 {
     public class AccountController : Controller
     {
-        //private readonly IUserManager usersManager;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
 
