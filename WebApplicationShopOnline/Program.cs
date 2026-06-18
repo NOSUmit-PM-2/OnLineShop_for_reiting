@@ -18,6 +18,7 @@ builder.Services.AddScoped<IProductDBsRepository, ProductsDBRepository>();
 
 builder.Services.AddScoped<ICartDBsRepository, CartDBsRepository>();
 
+builder.Services.AddTransient<IFavoriteRepository, FavoriteRepository>();
 
 var app = builder.Build();
 
