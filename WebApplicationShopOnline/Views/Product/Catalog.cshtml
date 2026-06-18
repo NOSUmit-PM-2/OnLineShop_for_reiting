@@ -1,36 +1,58 @@
 ﻿@model List<Product>
 
-    <h2>Каталог</h2>
+<style>
+    .sort-btn-container {
+        margin-bottom: 20px;
+        text-align: right;
+    }
+    .sort-btn {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s;
+    }
+    .sort-btn:hover {
+        background-color: #0056b3;
+    }
+</style>
 
-<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+<h2>Каталог</h2>
 
-    @foreach(var product in Model)
+<div class="sort-btn-container">
+    <button id="sortByPriceBtn" class="sort-btn">Сортировать по цене (возрастание)</button>
+</div>
+
+<div id="productsContainer" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+    @foreach (var product in Model)
     {
-        <div class="col">
+        <div class="col product-item" data-price="@product.Cost">
             <div class="card shadow-sm">
-                    <img src="@product.PathPicture">
-
+                <img src="@product.PathPicture" style="width: 100%; height: 200px; object-fit: cover;">
                 <div class="card-body">
-                        <h4>@product.Name</h4>
-                        <p>@product.Id</p>
-                        <p class="card-text">@product.Description</p>
+                    <h4>@product.Name</h4>
+                    <p class="product-id" style="display: none;">@product.Id</p>
+                    <p class="card-text">@product.Description</p>
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="btn-group">
                             <a class="btn btn-primary"
                                asp-area=""
                                asp-controller="Product"
-                               asp-action="Index" 
+                               asp-action="Index"
                                asp-route-id="@product.Id"
                                role="button">Подробнее</a>
-                            <a class="btn btn-primary"
+                            <a class="btn btn-primary add-to-cart-btn"
                                asp-area=""
                                asp-controller="Cart"
                                asp-action="Add"
                                asp-route-id="@product.Id"
-                               role="button">В корзину</a>
-                         
+                               role="button"
+                               data-product-id="@product.Id">В корзину</a>
                         </div>
-                            <small class="text-muted">@product.Cost р.</small>
+                        <small class="text-muted price-text">@product.Cost р.</small>
                     </div>
                 </div>
             </div>
@@ -38,3 +60,27 @@
     }
 </div>
 
+<script>
+    function sortProductsByPrice() {
+        const container = document.getElementById('productsContainer');
+        const items = Array.from(container.querySelectorAll('.product-item'));
+
+        items.sort((a, b) => {
+            const priceA = parseFloat(a.getAttribute('data-price'));
+            const priceB = parseFloat(b.getAttribute('data-price'));
+            return priceA - priceB;
+        });
+
+        items.forEach(item => container.appendChild(item));
+
+        const btn = document.getElementById('sortByPriceBtn');
+        const originalText = btn.innerHTML;
+        btn.innerHTML = 'Отсортировано!';
+        setTimeout(() => {
+            btn.innerHTML = originalText;
+        }, 1500);
+    }
+
+    document.getElementById('sortByPriceBtn').addEventListener('click', sortProductsByPrice);
+
+</script>
