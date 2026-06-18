@@ -9,5 +9,14 @@ namespace OnlineShop.DB
         public string Description { get; set; }
         public decimal Cost { get; set; }
         public string PathPicture { get; set; }
+        public ProductCategory Category { get; set; }
+
+    }
+
+    public enum ProductCategory
+    {
+        HOME,
+        ELECTRIC,
+        SPORT
     }
 }

@@ -7,5 +7,6 @@ namespace OnlineShop.DB
         ProductDB TryGetById(Guid id);
         void Add(ProductDB product);
         void Updata(ProductDB product);
+        List<ProductDB> GetByCategory(ProductCategory category);
     }
 }
