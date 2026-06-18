@@ -1,27 +1,69 @@
-﻿using WebApplicationShopOnline.Models;
+﻿using System.Text.Json;
+using WebApplicationShopOnline.Models;
 
 namespace WebApplicationShopOnline.Data
 {
     public class ProductRepository
     {
-        private static List<Product> products = new List<Product>();
-        //private static List<Product> products = new List<Product>()
-        //{
-        //    new Product("Чебурек", "с сыром", 120, "/images/Chebureki.jpg"),
-        //    new Product("Пирожок", "печеный", 50, "https://cdn.foodpicasso.com/assets/2022/05/30/2d5c997edd5a1c47de33aa05a85dc987---png_1000x_103c0_convert.png"),
-        //    new Product("Шаурма", "детская", 320, "https://bistromania.ru/wp-content/uploads/2022/02/%D1%88%D0%B0%D1%83%D1%80%D0%BC%D0%B0-%D0%B8-%D1%88%D0%B0%D1%83%D1%80%D0%BC%D0%B0-%D0%BC%D0%B8%D0%BD%D0%B8.jpg")
-        //};
+        private static List<Product> _products = new List<Product>();
+        private static readonly string _filePath = Path.Combine(Directory.GetCurrentDirectory(), "Data", "products.json");
 
-        public List<Product> GetProducts()
-        { 
-            return products;
-        }
-
-        public Product TryGetById(Guid id) 
+        static ProductRepository()
         {
-            return products.FirstOrDefault(product => product.Id == id);
+            LoadProductsFromJson();
         }
-    
 
+        private static void LoadProductsFromJson()
+        {
+            if (File.Exists(_filePath))
+            {
+                string json = File.ReadAllText(_filePath);
+     
+                var tempProducts = JsonSerializer.Deserialize<List<TempProduct>>(json) ?? new List<TempProduct>();
+
+                _products = tempProducts.Select(p => new Product
+                {
+                    Id = Guid.NewGuid(), 
+                    Name = p.Name,
+                    Description = p.Description,
+                    Cost = p.Cost,
+                    PathPicture = p.PathPicture
+                }).ToList();
+            }
+        }
+
+        public List<Product> GetProducts(string searchString = null)
+        {
+            if (string.IsNullOrEmpty(searchString))
+                return _products.ToList();
+
+            return _products
+                .Where(p => p.Name.ToLower().Contains(searchString.ToLower()))
+                .ToList();
+        }
+
+        public Product TryGetById(Guid id)
+        {
+            return _products.FirstOrDefault(product => product.Id == id);
+        }
+
+        public List<Product> SearchByName(string searchString)
+        {
+            if (string.IsNullOrEmpty(searchString))
+                return _products.ToList();
+
+            return _products
+                .Where(p => p.Name.ToLower().Contains(searchString.ToLower()))
+                .ToList();
+        }
+
+        private class TempProduct
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public string Description { get; set; }
+            public decimal Cost { get; set; }
+            public string PathPicture { get; set; }
+        }
     }
 }
