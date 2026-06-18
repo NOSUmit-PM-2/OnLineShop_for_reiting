@@ -67,11 +67,12 @@ namespace WebApplicationShopOnline.Helpers
 
         public static Cart ToCart(CartDB cart)
         {
+            if (cart == null) return new Cart { CartItems = new List<CartItem>() };
             return new Cart
             {
                 Id = cart.Id,
                 UserId = cart.UserId,
-                CartItems = cart.CartItems?.Select(item => ToCartItem(item)).ToList()
+                CartItems = cart.CartItems?.Select(item => ToCartItem(item)).ToList() 
             };
         }
 
