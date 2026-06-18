@@ -40,6 +40,10 @@ namespace OnlineShop.DB
             existingProduct.Description = product.Description;
             existingProduct.Cost = product.Cost;
             existingProduct.PathPicture = product.PathPicture;
+            existingProduct.Width = product.Width;
+            existingProduct.Height = product.Height;
+            existingProduct.Length = product.Length;
+            existingProduct.Weight = product.Weight;
             dbContext.SaveChanges();
         }
     }

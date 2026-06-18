@@ -26,6 +26,22 @@
                 <label class="form-label">URL картинки</label>
                 <input type="text" class="form-control" name="PathPicture" value="@Model.PathPicture">
             </div>
+            <div class="mb-3">
+                <label class="form-label">Длина (см)</label>
+                <input type="number" step="any" class="form-control" name="Length" value="@Model.Length">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Ширина (см)</label>
+                <input type="number" step="any" class="form-control" name="Width" value="@Model.Width">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Высота (см)</label>
+                <input type="number" step="any" class="form-control" name="Height" value="@Model.Height">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Вес (кг)</label>
+                <input type="number" step="any" class="form-control" name="Weight" value="@Model.Weight">
+            </div>
             <button type="submit" class="btn btn-primary">Сохранить</button>
         </form>
     </div>
