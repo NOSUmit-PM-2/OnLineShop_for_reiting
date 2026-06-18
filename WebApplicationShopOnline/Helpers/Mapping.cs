@@ -13,7 +13,11 @@ namespace WebApplicationShopOnline.Helpers
                 Name = product.Name,
                 Cost = product.Cost,
                 Description = product.Description,
-                PathPicture = product.PathPicture
+                PathPicture = product.PathPicture,
+                Length = product.Length,
+                Width = product.Width,
+                Height = product.Height,
+                Weight = product.Weight
             };
         }
 
@@ -25,7 +29,11 @@ namespace WebApplicationShopOnline.Helpers
                 Name = product.Name,
                 Cost = product.Cost,
                 Description = product.Description,
-                PathPicture = product.PathPicture
+                PathPicture = product.PathPicture,
+                Length = product.Length,
+                Width = product.Width,
+                Height = product.Height,
+                Weight = product.Weight
             };
         }
 

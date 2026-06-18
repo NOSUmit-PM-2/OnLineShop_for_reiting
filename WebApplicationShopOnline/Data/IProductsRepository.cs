@@ -8,5 +8,6 @@ namespace WebApplicationShopOnline.Data
         Product TryGetById(Guid id);
         void Add(Product product);
         void Updata(ProductEdit product);
+
     }
 }

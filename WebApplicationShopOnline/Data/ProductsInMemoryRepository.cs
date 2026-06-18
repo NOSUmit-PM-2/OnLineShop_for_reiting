@@ -41,6 +41,10 @@ namespace WebApplicationShopOnline.Data
             existingProduct.Description = product.Description;
             existingProduct.Cost = product.Cost;
             existingProduct.PathPicture = product.PathPicture;
+            existingProduct.Length = product.Length;
+            existingProduct.Width = product.Width;
+            existingProduct.Height = product.Height;
+            existingProduct.Weight = product.Weight;
         }
 
         
