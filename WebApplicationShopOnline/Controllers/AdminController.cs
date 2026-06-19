@@ -21,7 +21,7 @@ namespace WebApplicationShopOnline.Controllers
      
         public IActionResult Products(int id)
         {
-            return View(Mapping.ToProductsList(productsRepository.GetAll()));
+            return View(Mapping.ToProductsList(productsRepository.GetAll("")));
         }
 
 

@@ -1,6 +1,17 @@
 ﻿@model List<Product>
 
     <h2>Каталог</h2>
+<form method="get">
+
+    <input type="text"
+           name="searchText"
+           placeholder="Введите текст из описания" />
+
+    <button type="submit">
+        Поиск
+    </button>
+
+</form>
 
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 
