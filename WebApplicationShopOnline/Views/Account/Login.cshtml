@@ -1,24 +1,32 @@
-﻿@model Login
+﻿@model WebApplicationShopOnline.Models.Login
 
 <div class="text-left">
     <h1 class="display-4">Вход в систему</h1>
-    <form asp-action="Login" asp-controller="Account">
+
+    <form asp-action="Login" asp-controller="Account" method="post">
         <div class="form-group">
             <label asp-for="UserName">Имя пользователя</label>
-            <input asp-for="UserName" class="form-control" placeholder="Enter email">
-            <span asp-validatin-for="UserName" />
+            <input asp-for="UserName" class="form-control" placeholder="Введите имя">
+            <span asp-validation-for="UserName" class="text-danger" />
         </div>
+
         <div class="form-group">
             <label asp-for="Password">Пароль</label>
-            <input asp-for="Password" class="form-control">
-            <span asp-validatin-for="Password" />
+            <input asp-for="Password" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger" />
         </div>
-        <div class="form-check">
-            <label class="form-check-label" for="exampleCheck1">Запомни меня</label>
-            <input type="checkbox" class="form-check-input" name="RememberMe">
-            
+
+        <div class="form-check mb-3">
+            <input asp-for="RememberMe" class="form-check-input" />
+            <label asp-for="RememberMe" class="form-check-label">Запомни меня</label>
         </div>
+
         <button type="submit" class="btn btn-primary">Войти</button>
     </form>
-
 </div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
