@@ -28,6 +28,12 @@
                                asp-action="Add"
                                asp-route-id="@product.Id"
                                role="button">В корзину</a>
+                            <a class="btn btn-primary"
+                           asp-area=""
+                           asp-controller="Comparison"
+                           asp-action="CompareProducts"
+                           asp-route-id="@product"
+                               role="button">В Сравнение</a>
                          
                         </div>
                             <small class="text-muted">@product.Cost р.</small>
