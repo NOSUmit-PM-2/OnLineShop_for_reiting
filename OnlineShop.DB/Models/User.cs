@@ -5,6 +5,7 @@ namespace OnlineShop.DB.Models
 {
     public class User:IdentityUser
     {
-
+        public string Namber { get; set; }
+        public string Address { get; set; }
     }
 }

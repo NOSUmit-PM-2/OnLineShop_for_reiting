@@ -1,4 +1,4 @@
-﻿@model Login
+﻿@model Registration
 
 <div class="text-left">
     <h1 class="display-4">Регистрация пользователя</h1>
@@ -7,6 +7,16 @@
             <label asp-for="UserName">Имя пользователя</label>
             <input asp-for="UserName" class="form-control" placeholder="Введите имя пользователя, оно может совпадать с почтой">
             <span asp-validatin-for="UserName" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Namber">Телефон</label>
+            <input asp-for="Namber" class="form-control" placeholder="Введите номер телефона">
+            <span asp-validatin-for="Namber" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Address">Адрес</label>
+            <input asp-for="Address" class="form-control" placeholder="Введите адрес проживания">
+            <span asp-validatin-for="Address" />
         </div>
         <div class="form-group">
             <label asp-for="Email">Email</label>

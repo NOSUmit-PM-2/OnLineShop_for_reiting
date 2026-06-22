@@ -26,8 +26,8 @@ namespace OnlineShop.DB
             }
             if (userManager.FindByNameAsync(adminEmail).Result == null)
             {
-                var admin = new User { Email = adminEmail, UserName = adminEmail };
-                var result = userManager.CreateAsync(admin, adminPassword).Result;
+                var admin = new User { Email = adminEmail, UserName = adminEmail, Address = "AdminAddress", Namber = "AdminNamber" };
+                var result = userManager.CreateAsync(admin, "_Aa123456").Result;
                 if (result.Succeeded)
                     {
                         userManager.AddToRoleAsync(admin, Constants.AdminRoleName).Wait();
