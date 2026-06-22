@@ -1,0 +1,42 @@
+@model List<UserRoleViewModel>
+
+<div class="row">
+    <div class="col">
+        @await Html.PartialAsync("SideMenu")
+    </div>
+    <div class="col-9">
+        <h2>Управление пользователями</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Имя пользователя</th>
+                    <th>Email</th>
+                    <th>Роли</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr>
+                        <td>@user.UserName</td>
+                        <td>@user.Email</td>
+                        <td>
+                            <form asp-action="UpdateUserRole" asp-controller="Admin" method="post">
+                                <input type="hidden" name="userId" value="@user.UserId" />
+                                @foreach (var role in new[] { OnlineShop.DB.Constants.AdminRoleName, OnlineShop.DB.Constants.UserRoleName })
+                                {
+                                    <input type="radio"
+                                           name="roleName"
+                                           value="@role"
+                                           @(user.Roles.Contains(role) ? "checked" : "")
+                                           onchange="this.form.submit()" />
+                                    <label>@role</label>
+                                }
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div> 

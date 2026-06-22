@@ -6,16 +6,22 @@ using System.Xml.Linq;
 using WebApplicationShopOnline.Data;
 using WebApplicationShopOnline.Helpers;
 using WebApplicationShopOnline.Models;
+using Microsoft.AspNetCore.Identity;
+using OnlineShop.DB.Models;
 
 namespace WebApplicationShopOnline.Controllers
 {
     public class AdminController : Controller
     {
         readonly IProductDBsRepository productsRepository;
+        private readonly UserManager<User> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public AdminController(IProductDBsRepository prodRepo)
+        public AdminController(IProductDBsRepository prodRepo, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
         {
             this.productsRepository = prodRepo;
+            _userManager = userManager;
+            _roleManager = roleManager;
         }
 
      
@@ -58,6 +64,47 @@ namespace WebApplicationShopOnline.Controllers
         {
             productsRepository.Updata(Mapping.ToProductDB(product));
             return RedirectToAction("Index", "Product", new { product.Id });
+        }
+
+        public async Task<IActionResult> Users()
+        {
+            var users = _userManager.Users.ToList();
+            var userRoles = new List<UserRoleViewModel>();
+
+            foreach (var user in users)
+            {
+                var roles = await _userManager.GetRolesAsync(user);
+                userRoles.Add(new UserRoleViewModel
+                {
+                    UserId = user.Id,
+                    UserName = user.UserName,
+                    Email = user.Email,
+                    Roles = roles.ToList()
+                });
+            }
+
+            return View(userRoles);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateUserRole(string userId, string roleName)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var allRoles = new[] { OnlineShop.DB.Constants.AdminRoleName, OnlineShop.DB.Constants.UserRoleName };
+            var userRoles = await _userManager.GetRolesAsync(user);
+
+            // Удаляем все роли
+            await _userManager.RemoveFromRolesAsync(user, userRoles);
+
+            // Добавляем только выбранную
+            await _userManager.AddToRoleAsync(user, roleName);
+
+            return RedirectToAction(nameof(Users));
         }
     }
 }
