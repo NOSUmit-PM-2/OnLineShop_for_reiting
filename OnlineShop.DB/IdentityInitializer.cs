@@ -16,7 +16,7 @@ namespace OnlineShop.DB
             var adminPassword = "_Aa123456";
 
             if (roleManager.FindByNameAsync(Constants.AdminRoleName).Result == null)
-            { 
+            {
                 roleManager.CreateAsync(new IdentityRole(Constants.AdminRoleName)).Wait();
             }
 
@@ -29,9 +29,9 @@ namespace OnlineShop.DB
                 var admin = new User { Email = adminEmail, UserName = adminEmail };
                 var result = userManager.CreateAsync(admin, adminPassword).Result;
                 if (result.Succeeded)
-                    {
-                        userManager.AddToRoleAsync(admin, Constants.AdminRoleName).Wait();
-                    }
+                {
+                    userManager.AddToRoleAsync(admin, Constants.AdminRoleName).Wait();
+                }
             }
         }
     }
