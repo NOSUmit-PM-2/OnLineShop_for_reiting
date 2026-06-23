@@ -24,11 +24,16 @@ namespace WebApplicationShopOnline.Controllers
             return View(prod);
         }
 
-
-        public IActionResult Catalog() 
+        public IActionResult Catalog(string searchQuery) 
         {
-            List<ProductDB>products = productsRepository.GetAll();
-            //return View("CatalogSimple", products);
+            List<ProductDB> products = productsRepository.GetAll();
+            
+            if (!string.IsNullOrEmpty(searchQuery))
+            {
+                products = products.Where(p => p.Description.ToLower().Contains(searchQuery.ToLower())).ToList();
+            }
+            
+            ViewBag.SearchQuery = searchQuery;
             return View(Mapping.ToProductsList(products));
         }
     }
