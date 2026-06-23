@@ -1,23 +1,24 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualBasic;
 using OnlineShop.DB.Models;
 using System.Diagnostics;
 using WebApplicationShopOnline.Models;
 using OnlineShop.DB;
+using Microsoft.Extensions.Logging;
 
 namespace WebApplicationShopOnline.Controllers
 {
     public class AccountController : Controller
     {
-        //private readonly IUserManager usersManager;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly ILogger<AccountController> _logger;
 
-        public AccountController(SignInManager<User> signInManager, UserManager<User> _userManager)
+        public AccountController(SignInManager<User> signInManager, UserManager<User> userManager, ILogger<AccountController> logger)
         {
             _signInManager = signInManager;
-            this._userManager = _userManager;
+            _userManager = userManager;
+            _logger = logger;
         }
 
         [HttpPost]
@@ -29,13 +30,13 @@ namespace WebApplicationShopOnline.Controllers
                 var result = _signInManager.PasswordSignInAsync(user, login.Password, login.RememberMe, false).Result;
                 if (result.Succeeded)
                 {
+                    _logger.LogInformation($"Пользователь {login.UserName} вошел в систему");
                     return RedirectToAction("Catalog", "Product");
                 }
             }
             return View(login);
         }
 
-   
         public IActionResult Login()
         {
             return View();
@@ -49,25 +50,35 @@ namespace WebApplicationShopOnline.Controllers
         [HttpPost]
         public IActionResult Registration(Registration reg)
         {
-            if (_userManager.FindByNameAsync(reg.UserName).Result == null)
+            if (ModelState.IsValid)
             {
                 var user = new User { Email = reg.Email, UserName = reg.UserName };
                 var result = _userManager.CreateAsync(user, reg.Password).Result;
+                
                 if (result.Succeeded)
                 {
-                    _userManager.AddToRoleAsync(user, OnlineShop.DB.Constants.UserRoleName).Wait();
+                    _logger.LogInformation($"Пользователь {reg.UserName} зарегистрирован");
+                    _userManager.AddToRoleAsync(user, Constants.UserRoleName).Wait();
                     _signInManager.SignInAsync(user, false).Wait();
                     return RedirectToAction("Catalog", "Product");
                 }
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                        _logger.LogWarning($"Ошибка регистрации: {error.Description}");
+                    }
+                }
             }
-            return View();
+            return View(reg);
         }
 
         public IActionResult Logout()
         {
-            _signInManager.SignOutAsync().Wait();   
+            _signInManager.SignOutAsync().Wait();
+            _logger.LogInformation("Пользователь вышел из системы");
             return RedirectToAction("Catalog", "Product");
         }
-
     }
 }
