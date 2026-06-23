@@ -1,24 +1,36 @@
-﻿@model Login
+﻿@model WebApplicationShopOnline.Models.Registration
 
 <div class="text-left">
     <h1 class="display-4">Регистрация пользователя</h1>
-    <form asp-action="Registration" asp-controller="Account">
+
+    <form asp-action="Registration" asp-controller="Account" method="post">
+        <!-- Вывод всех ошибок формы -->
+        <div asp-validation-summary="All" class="text-danger"></div>
+
         <div class="form-group">
-            <label asp-for="UserName">Имя пользователя</label>
-            <input asp-for="UserName" class="form-control" placeholder="Введите имя пользователя, оно может совпадать с почтой">
-            <span asp-validatin-for="UserName" />
+            <label asp-for="UserName"></label>
+            <input asp-for="UserName" class="form-control" placeholder="Введите имя пользователя">
+            <span asp-validation-for="UserName" class="text-danger"></span>
         </div>
+
         <div class="form-group">
-            <label asp-for="Email">Email</label>
-            <input asp-for="Email" class="form-control" placeholder="Введите почту">
-            <span asp-validatin-for="Email" />
+            <label asp-for="Email"></label>
+            <input asp-for="Email" class="form-control" placeholder="Введите email">
+            <span asp-validation-for="Email" class="text-danger"></span>
         </div>
+
         <div class="form-group">
-            <label asp-for="Password">Пароль</label>
-            <input asp-for="Password" class="form-control">
-            <span asp-validatin-for="Password" />
+            <label asp-for="Password"></label>
+            <input asp-for="Password" class="form-control" type="password" placeholder="Введите пароль">
+            <span asp-validation-for="Password" class="text-danger"></span>
         </div>
+
         <button type="submit" class="btn btn-primary">Зарегистрировать</button>
     </form>
-
 </div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
